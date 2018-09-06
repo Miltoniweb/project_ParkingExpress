@@ -36,10 +36,10 @@ public class Registry extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
         jComboBox1 = new javax.swing.JComboBox<>();
-        jButton1 = new javax.swing.JButton();
         jPanel6 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jComboBox2 = new javax.swing.JComboBox<>();
+        jButton1 = new javax.swing.JButton();
         jPanel7 = new javax.swing.JPanel();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
@@ -196,40 +196,25 @@ public class Registry extends javax.swing.JFrame {
 
         jComboBox1.setPreferredSize(new java.awt.Dimension(33, 35));
 
-        jButton1.setBackground(new java.awt.Color(255, 255, 255));
-        jButton1.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(112, 112, 112));
-        jButton1.setText("Dar ingreso");
-        jButton1.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(112, 112, 112), null));
-        jButton1.setBorderPainted(false);
-        jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jButton1.setFocusPainted(false);
-        jButton1.setPreferredSize(new java.awt.Dimension(170, 28));
-
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGap(47, 47, 47)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(42, 42, 42)
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3))
-                        .addGap(49, 49, 49)
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jComboBox1, 0, 237, Short.MAX_VALUE)
-                            .addComponent(jTextField1)))
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(282, 282, 282)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel3))
+                .addGap(49, 49, 49)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addContainerGap()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                .addContainerGap(30, Short.MAX_VALUE)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -237,9 +222,7 @@ public class Registry extends javax.swing.JFrame {
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(12, Short.MAX_VALUE))
+                .addGap(28, 28, 28))
         );
 
         jPanel6.setBackground(new java.awt.Color(255, 255, 255));
@@ -252,6 +235,16 @@ public class Registry extends javax.swing.JFrame {
 
         jComboBox2.setPreferredSize(new java.awt.Dimension(33, 35));
 
+        jButton1.setBackground(new java.awt.Color(255, 255, 255));
+        jButton1.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        jButton1.setForeground(new java.awt.Color(112, 112, 112));
+        jButton1.setText("Dar ingreso");
+        jButton1.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(112, 112, 112), null));
+        jButton1.setBorderPainted(false);
+        jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButton1.setFocusPainted(false);
+        jButton1.setPreferredSize(new java.awt.Dimension(170, 28));
+
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
@@ -261,16 +254,19 @@ public class Registry extends javax.swing.JFrame {
                 .addComponent(jLabel4)
                 .addGap(18, 18, 18)
                 .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(650, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(212, 212, 212))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
-                .addGap(10, 10, 10)
+                .addGap(7, 7, 7)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLabel4)
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(9, Short.MAX_VALUE))
         );
 
         jPanel7.setPreferredSize(new java.awt.Dimension(100, 70));
