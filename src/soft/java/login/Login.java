@@ -114,7 +114,7 @@ public class Login extends javax.swing.JFrame {
         jTextField1.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
         jTextField1.setForeground(new java.awt.Color(182, 182, 184));
         jTextField1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(182, 182, 184)));
-        jTextField1.setMargin(new java.awt.Insets(10, 9, 10, 15));
+        jTextField1.setMargin(new java.awt.Insets(10, 9, 10, 9));
 
         jPasswordField1.setBackground(new java.awt.Color(255, 255, 255));
         jPasswordField1.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N

@@ -231,7 +231,7 @@
               </Border>
             </Property>
             <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
-              <Insets value="[10, 9, 10, 15]"/>
+              <Insets value="[10, 9, 10, 9]"/>
             </Property>
           </Properties>
         </Component>
