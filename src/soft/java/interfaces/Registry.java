@@ -145,6 +145,11 @@ public class Registry extends javax.swing.JFrame {
         jLabel19.setFocusCycleRoot(true);
         jLabel19.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jLabel19.setPreferredSize(new java.awt.Dimension(189, 50));
+        jLabel19.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel19MouseClicked(evt);
+            }
+        });
 
         jLabel20.setFont(new java.awt.Font("Ubuntu", 0, 26)); // NOI18N
         jLabel20.setForeground(new java.awt.Color(240, 240, 242));
@@ -603,6 +608,12 @@ public class Registry extends javax.swing.JFrame {
         if (inputText<'0' || inputText>'9') evt.consume();
     }//GEN-LAST:event_txt_efectivoKeyTyped
 
+    private void jLabel19MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel19MouseClicked
+        Home home = new Home();
+        home.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jLabel19MouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -614,7 +625,7 @@ public class Registry extends javax.swing.JFrame {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if ("Windows".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
