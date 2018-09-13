@@ -3,12 +3,20 @@ package soft.java.interfaces;
 
 import java.awt.MouseInfo;
 import java.awt.Point;
+import java.sql.Connection;
+import javax.swing.JOptionPane;
+import soft.java.conection.MySQLConnection;
+import soft.java.login.Login;
 
 
 public class Home extends javax.swing.JFrame {
 
     int x, y;
    
+    // conector a la Base de datos
+    MySQLConnection conex = new MySQLConnection();
+    Connection con = conex.getConnectionBD();
+    
     public Home() {
         this.setUndecorated(true);
         initComponents();
@@ -107,6 +115,11 @@ public class Home extends javax.swing.JFrame {
         jLabel19.setFocusCycleRoot(true);
         jLabel19.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jLabel19.setPreferredSize(new java.awt.Dimension(189, 50));
+        jLabel19.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel19MouseClicked(evt);
+            }
+        });
 
         jLabel20.setFont(new java.awt.Font("Ubuntu", 0, 26)); // NOI18N
         jLabel20.setForeground(new java.awt.Color(240, 240, 242));
@@ -463,6 +476,13 @@ public class Home extends javax.swing.JFrame {
          x = evt.getX();
          y = evt.getY();
     }//GEN-LAST:event_formMousePressed
+
+    private void jLabel19MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel19MouseClicked
+        conex.getDisconnectBD();
+        Login login = new Login();
+            login.setVisible(true);
+            this.dispose();
+    }//GEN-LAST:event_jLabel19MouseClicked
 
     /**
      * @param args the command line arguments
