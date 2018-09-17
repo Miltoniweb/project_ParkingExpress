@@ -21,7 +21,7 @@ public class MySQLConnection {
             Class.forName(drive);
             con = DriverManager.getConnection(url, user, password);
             if (con != null) {
-                JOptionPane.showMessageDialog(null,"Conexión establecida...");
+                System.out.println("Conexión Establecida");
             }
         } catch(ClassNotFoundException ex){
             JOptionPane.showMessageDialog(null,"Driver no encontrado");
