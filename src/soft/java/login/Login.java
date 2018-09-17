@@ -201,7 +201,11 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_formMouseDragged
 
     private void jLabel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel7MouseClicked
-       this.dispose();
+        int dialog = JOptionPane.YES_NO_OPTION;
+        int result = JOptionPane.showConfirmDialog(null, "¿Desea salir del sistema?", "Salir" ,dialog);
+        if (result == 0){
+            System.exit(0);
+        }
     }//GEN-LAST:event_jLabel7MouseClicked
 
     /**
