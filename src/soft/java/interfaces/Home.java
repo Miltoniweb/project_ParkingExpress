@@ -3,8 +3,14 @@ package soft.java.interfaces;
 
 import java.awt.MouseInfo;
 import java.awt.Point;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.Connection;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import javax.swing.JOptionPane;
+import javax.swing.Timer;
 import soft.java.conection.MySQLConnection;
 import soft.java.login.Login;
 
@@ -17,15 +23,31 @@ public class Home extends javax.swing.JFrame {
     MySQLConnection conex = new MySQLConnection();
     Connection con = conex.getConnectionBD();
     
+        
     public Home() {
         this.setUndecorated(true);
         initComponents();
         setTitle("Menú");
         this.setLocationRelativeTo(null);
+        
+        // Ejecuta la hora del sistema
+        Timer time = new Timer(100, new Home.currentHour());
+        time.start();
     }
-
     
-    
+    // Clase para obtener la hora del sistema
+    class currentHour implements ActionListener{
+      
+        public void actionPerformed(ActionEvent e){
+            Date getHours = new Date();
+            String workingDay = "hh:mm:ss a";
+            SimpleDateFormat format = new SimpleDateFormat(workingDay);
+            Calendar calendar = Calendar.getInstance(); 
+                jbl_hours.setText(String.format(format.format(getHours), calendar));    
+                 
+        }
+        
+    }
     
     
     
@@ -38,6 +60,7 @@ public class Home extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
+        jbl_hours = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
@@ -123,16 +146,24 @@ public class Home extends javax.swing.JFrame {
         jLabel20.setForeground(new java.awt.Color(240, 240, 242));
         jLabel20.setText("Menú Principal");
 
+        jbl_hours.setFont(new java.awt.Font("Roboto", 0, 40)); // NOI18N
+        jbl_hours.setForeground(new java.awt.Color(182, 182, 184));
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(54, 54, 54)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel20))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(54, 54, 54)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel20)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(39, 39, 39)
+                        .addComponent(jbl_hours)))
                 .addContainerGap(57, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -141,7 +172,9 @@ public class Home extends javax.swing.JFrame {
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(74, 74, 74)
                 .addComponent(jLabel20)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 449, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 260, Short.MAX_VALUE)
+                .addComponent(jbl_hours, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(148, 148, 148)
                 .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(26, 26, 26))
         );
@@ -470,7 +503,7 @@ public class Home extends javax.swing.JFrame {
         int dialog = JOptionPane.YES_NO_OPTION;
         int result = JOptionPane.showConfirmDialog(null, "¿Desea salir del sistema?", "Salir" ,dialog);
         if (result == 0){
-            this.dispose();
+            System.exit(0);
         }
     }//GEN-LAST:event_jLabel5MouseClicked
 
@@ -602,5 +635,6 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel9;
+    private javax.swing.JLabel jbl_hours;
     // End of variables declaration//GEN-END:variables
 }
