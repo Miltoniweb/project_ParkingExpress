@@ -112,6 +112,7 @@ public class Registry extends javax.swing.JFrame {
         jLabel19 = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
         jbl_hours = new javax.swing.JLabel();
+        rs_calendar = new rojeru_san.componentes.RSCalendar();
         jPanel2 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
@@ -240,27 +241,50 @@ public class Registry extends javax.swing.JFrame {
         jbl_hours.setFont(new java.awt.Font("Roboto", 0, 40)); // NOI18N
         jbl_hours.setForeground(new java.awt.Color(182, 182, 184));
 
+        rs_calendar.setBackground(new java.awt.Color(49, 56, 62));
+        rs_calendar.setBorder(null);
+        rs_calendar.setForeground(new java.awt.Color(255, 255, 255));
+        rs_calendar.setAltoFilas(20);
+        rs_calendar.setAltoHead(35);
+        rs_calendar.setColorDiaActual(new java.awt.Color(240, 92, 44));
+        rs_calendar.setEnabled(false);
+        rs_calendar.setFocusable(false);
+        rs_calendar.setFont(new java.awt.Font("Ubuntu", 0, 12)); // NOI18N
+        rs_calendar.setFuenteFilas(new java.awt.Font("Roboto", 0, 12)); // NOI18N
+        rs_calendar.setFuenteHead(new java.awt.Font("Roboto", 0, 12)); // NOI18N
+        rs_calendar.setPreferredSize(new java.awt.Dimension(300, 322));
+        rs_calendar.setTextMayusculas(false);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(56, 56, 56)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jbl_hours, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel20)))
-                .addContainerGap(55, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(56, 56, 56)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel20)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(16, 16, 16)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(rs_calendar, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(48, 48, 48)
+                                .addComponent(jbl_hours, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(54, 54, 54)
                 .addComponent(jLabel20)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 297, Short.MAX_VALUE)
+                .addGap(50, 50, 50)
+                .addComponent(rs_calendar, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jbl_hours, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(136, 136, 136)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 106, Short.MAX_VALUE)
                 .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(21, 21, 21))
         );
@@ -721,6 +745,7 @@ public class Registry extends javax.swing.JFrame {
 
     private void btn_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cancelarActionPerformed
         // Boton nuevo cancelar
+        
         bloquear();
         limpiar();
     }//GEN-LAST:event_btn_cancelarActionPerformed
@@ -792,6 +817,7 @@ public class Registry extends javax.swing.JFrame {
     private javax.swing.JLabel jbl_hours;
     private javax.swing.JComboBox<String> jcb_tarifa;
     private javax.swing.JComboBox<String> jcb_vehiculo;
+    private rojeru_san.componentes.RSCalendar rs_calendar;
     private javax.swing.JTextField txt_cambio;
     private javax.swing.JTextField txt_efectivo;
     private javax.swing.JTextField txt_fecha_entrada;
