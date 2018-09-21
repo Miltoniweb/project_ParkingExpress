@@ -3,21 +3,102 @@ package soft.java.interfaces;
 
 import java.awt.MouseInfo;
 import java.awt.Point;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import javax.swing.Timer;
+import soft.java.conection.MySQLConnection;
 
 
 public class Registry extends javax.swing.JFrame {
 
     int x, y;
     
+    // conector a la Base de datos
+    MySQLConnection conex = new MySQLConnection();
+    Connection con = conex.getConnectionBD();
+        
     public Registry() {
         this.setUndecorated(true);
         initComponents();
         setTitle("Registro vehículo");
         this.setLocationRelativeTo(null);
+        // Ejecuta la hora del sistema
+        Timer time = new Timer(1000, new Registry.currentHour());
+        time.start();
+        bloquear();
     }
-
-
     
+      // Clase para obtener la hora del sistema
+    class currentHour implements ActionListener{
+      
+        public void actionPerformed(ActionEvent e){
+            Date getHours = new Date();
+            String workingDay = "hh:mm a";
+            SimpleDateFormat format = new SimpleDateFormat(workingDay);
+            Calendar calendar = Calendar.getInstance(); 
+                jbl_hours.setText(String.format(format.format(getHours), calendar));    
+                 
+        }
+        
+    }
+    
+
+    // Metodo para desbloquear campos de texto y botones
+    void desbloquear(){
+        txt_placa.setEditable(true);
+        jcb_vehiculo.setEditable(true);
+        jcb_tarifa.setEditable(true);
+        txt_fecha_entrada.setEditable(false);
+        txt_hora_entrada.setEditable(false);        
+        txt_fecha_salida.setEditable(false);        
+        txt_hora_salida.setEditable(false);
+        txt_pago.setEditable(false);
+        txt_efectivo.setEditable(true);
+        txt_cambio.setEditable(false);
+        txt_tiempo.setEditable(false);
+            btn_nuevo_ingreso.setEnabled(false);
+            btn_ingreso.setEnabled(false);
+            btn_cancelar.setEnabled(true);
+            btn_pendiente.setEnabled(true);
+            btn_liquidacion.setEnabled(true);   
+    }
+    
+    // Metodo para bloquear campos de texto y botones
+    void bloquear(){
+        txt_placa.setEditable(false);
+        jcb_vehiculo.setEditable(false);
+        jcb_tarifa.setEditable(false);
+        txt_fecha_entrada.setEditable(false);
+        txt_hora_entrada.setEditable(false);        
+        txt_fecha_salida.setEditable(false);        
+        txt_hora_salida.setEditable(false);
+        txt_pago.setEditable(false);
+        txt_efectivo.setEditable(false);
+        txt_cambio.setEditable(false);
+        txt_tiempo.setEditable(false);
+            btn_nuevo_ingreso.setEnabled(true);
+            btn_ingreso.setEnabled(false);
+            btn_cancelar.setEnabled(false);
+            btn_pendiente.setEnabled(false);
+            btn_liquidacion.setEnabled(false);   
+    }
+    
+    void limpiar(){
+        txt_placa.setText("");
+        txt_fecha_entrada.setText("");
+        txt_fecha_entrada.setText("");
+        txt_hora_entrada.setText("");
+        txt_fecha_salida.setText("");
+        txt_hora_salida.setText("");
+        txt_pago.setText("");
+        txt_efectivo.setText("");
+        txt_cambio.setText("");
+        txt_tiempo.setText("");
+    }
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -30,38 +111,39 @@ public class Registry extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel19 = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
+        jbl_hours = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        txt_placa = new javax.swing.JTextField();
+        jcb_vehiculo = new javax.swing.JComboBox<>();
         jPanel6 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox<>();
-        jButton1 = new javax.swing.JButton();
+        jcb_tarifa = new javax.swing.JComboBox<>();
+        btn_ingreso = new javax.swing.JButton();
         jPanel7 = new javax.swing.JPanel();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        btn_nuevo_ingreso = new javax.swing.JButton();
+        btn_cancelar = new javax.swing.JButton();
+        btn_pendiente = new javax.swing.JButton();
+        btn_liquidacion = new javax.swing.JButton();
         jPanel8 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
-        jTextField5 = new javax.swing.JTextField();
+        txt_fecha_entrada = new javax.swing.JTextField();
+        txt_hora_entrada = new javax.swing.JTextField();
+        txt_fecha_salida = new javax.swing.JTextField();
+        txt_hora_salida = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
-        jTextField6 = new javax.swing.JTextField();
-        jTextField7 = new javax.swing.JTextField();
+        txt_tiempo = new javax.swing.JTextField();
+        txt_pago = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         txt_efectivo = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
-        jTextField9 = new javax.swing.JTextField();
+        txt_cambio = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
@@ -155,6 +237,9 @@ public class Registry extends javax.swing.JFrame {
         jLabel20.setForeground(new java.awt.Color(240, 240, 242));
         jLabel20.setText("Registro Diario");
 
+        jbl_hours.setFont(new java.awt.Font("Roboto", 0, 40)); // NOI18N
+        jbl_hours.setForeground(new java.awt.Color(182, 182, 184));
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -162,8 +247,10 @@ public class Registry extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(56, 56, 56)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel20)
-                    .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(jbl_hours, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel20)))
                 .addContainerGap(55, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -171,7 +258,9 @@ public class Registry extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(54, 54, 54)
                 .addComponent(jLabel20)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 474, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 297, Short.MAX_VALUE)
+                .addComponent(jbl_hours, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(136, 136, 136)
                 .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(21, 21, 21))
         );
@@ -192,14 +281,14 @@ public class Registry extends javax.swing.JFrame {
         jLabel3.setForeground(new java.awt.Color(49, 56, 62));
         jLabel3.setText("Tipo de vehículo");
 
-        jTextField1.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        txt_placa.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
+        txt_placa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                txt_placaActionPerformed(evt);
             }
         });
 
-        jComboBox1.setPreferredSize(new java.awt.Dimension(33, 35));
+        jcb_vehiculo.setPreferredSize(new java.awt.Dimension(33, 35));
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -212,8 +301,8 @@ public class Registry extends javax.swing.JFrame {
                     .addComponent(jLabel3))
                 .addGap(49, 49, 49)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jcb_vehiculo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txt_placa, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
@@ -222,11 +311,11 @@ public class Registry extends javax.swing.JFrame {
                 .addContainerGap(30, Short.MAX_VALUE)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txt_placa, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jcb_vehiculo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(28, 28, 28))
         );
 
@@ -238,17 +327,17 @@ public class Registry extends javax.swing.JFrame {
         jLabel4.setForeground(new java.awt.Color(49, 56, 62));
         jLabel4.setText("Tarifa");
 
-        jComboBox2.setPreferredSize(new java.awt.Dimension(33, 35));
+        jcb_tarifa.setPreferredSize(new java.awt.Dimension(33, 35));
 
-        jButton1.setBackground(new java.awt.Color(255, 255, 255));
-        jButton1.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(112, 112, 112));
-        jButton1.setText("Dar ingreso");
-        jButton1.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(112, 112, 112), null));
-        jButton1.setBorderPainted(false);
-        jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jButton1.setFocusPainted(false);
-        jButton1.setPreferredSize(new java.awt.Dimension(170, 28));
+        btn_ingreso.setBackground(new java.awt.Color(255, 255, 255));
+        btn_ingreso.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        btn_ingreso.setForeground(new java.awt.Color(112, 112, 112));
+        btn_ingreso.setText("Dar ingreso");
+        btn_ingreso.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(112, 112, 112), null));
+        btn_ingreso.setBorderPainted(false);
+        btn_ingreso.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn_ingreso.setFocusPainted(false);
+        btn_ingreso.setPreferredSize(new java.awt.Dimension(170, 28));
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -258,9 +347,9 @@ public class Registry extends javax.swing.JFrame {
                 .addGap(47, 47, 47)
                 .addComponent(jLabel4)
                 .addGap(18, 18, 18)
-                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jcb_tarifa, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btn_ingreso, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(212, 212, 212))
         );
         jPanel6Layout.setVerticalGroup(
@@ -268,48 +357,58 @@ public class Registry extends javax.swing.JFrame {
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addGap(7, 7, 7)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jcb_tarifa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btn_ingreso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(9, Short.MAX_VALUE))
         );
 
         jPanel7.setPreferredSize(new java.awt.Dimension(100, 70));
 
-        jButton2.setBackground(new java.awt.Color(255, 255, 255));
-        jButton2.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
-        jButton2.setForeground(new java.awt.Color(49, 56, 62));
-        jButton2.setText("Nuevo ingreso");
-        jButton2.setBorderPainted(false);
-        jButton2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jButton2.setPreferredSize(new java.awt.Dimension(189, 50));
-        jButton2.setRequestFocusEnabled(false);
+        btn_nuevo_ingreso.setBackground(new java.awt.Color(255, 255, 255));
+        btn_nuevo_ingreso.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
+        btn_nuevo_ingreso.setForeground(new java.awt.Color(49, 56, 62));
+        btn_nuevo_ingreso.setText("Nuevo ingreso");
+        btn_nuevo_ingreso.setBorderPainted(false);
+        btn_nuevo_ingreso.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn_nuevo_ingreso.setPreferredSize(new java.awt.Dimension(189, 50));
+        btn_nuevo_ingreso.setRequestFocusEnabled(false);
+        btn_nuevo_ingreso.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_nuevo_ingresoActionPerformed(evt);
+            }
+        });
 
-        jButton3.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
-        jButton3.setForeground(new java.awt.Color(49, 56, 62));
-        jButton3.setText("Cancelar");
-        jButton3.setToolTipText("");
-        jButton3.setBorderPainted(false);
-        jButton3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jButton3.setPreferredSize(new java.awt.Dimension(189, 50));
-        jButton3.setRequestFocusEnabled(false);
+        btn_cancelar.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
+        btn_cancelar.setForeground(new java.awt.Color(49, 56, 62));
+        btn_cancelar.setText("Cancelar");
+        btn_cancelar.setToolTipText("");
+        btn_cancelar.setBorderPainted(false);
+        btn_cancelar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn_cancelar.setPreferredSize(new java.awt.Dimension(189, 50));
+        btn_cancelar.setRequestFocusEnabled(false);
+        btn_cancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_cancelarActionPerformed(evt);
+            }
+        });
 
-        jButton4.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
-        jButton4.setForeground(new java.awt.Color(49, 56, 62));
-        jButton4.setText("Pendiente");
-        jButton4.setBorderPainted(false);
-        jButton4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jButton4.setPreferredSize(new java.awt.Dimension(189, 50));
-        jButton4.setRequestFocusEnabled(false);
+        btn_pendiente.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
+        btn_pendiente.setForeground(new java.awt.Color(49, 56, 62));
+        btn_pendiente.setText("Pendiente");
+        btn_pendiente.setBorderPainted(false);
+        btn_pendiente.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn_pendiente.setPreferredSize(new java.awt.Dimension(189, 50));
+        btn_pendiente.setRequestFocusEnabled(false);
 
-        jButton5.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
-        jButton5.setForeground(new java.awt.Color(49, 56, 62));
-        jButton5.setText("Generar liquidación");
-        jButton5.setBorder(null);
-        jButton5.setBorderPainted(false);
-        jButton5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jButton5.setPreferredSize(new java.awt.Dimension(189, 50));
-        jButton5.setRequestFocusEnabled(false);
+        btn_liquidacion.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
+        btn_liquidacion.setForeground(new java.awt.Color(49, 56, 62));
+        btn_liquidacion.setText("Generar liquidación");
+        btn_liquidacion.setBorder(null);
+        btn_liquidacion.setBorderPainted(false);
+        btn_liquidacion.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn_liquidacion.setPreferredSize(new java.awt.Dimension(189, 50));
+        btn_liquidacion.setRequestFocusEnabled(false);
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
@@ -317,13 +416,13 @@ public class Registry extends javax.swing.JFrame {
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addGap(45, 45, 45)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btn_nuevo_ingreso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(40, 40, 40)
-                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btn_cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(40, 40, 40)
-                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btn_pendiente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(40, 40, 40)
-                .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btn_liquidacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel7Layout.setVerticalGroup(
@@ -332,12 +431,12 @@ public class Registry extends javax.swing.JFrame {
                 .addGap(7, 7, 7)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
-                        .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btn_liquidacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(1, 1, 1))
                     .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btn_nuevo_ingreso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btn_cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btn_pendiente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -361,31 +460,31 @@ public class Registry extends javax.swing.JFrame {
         jLabel9.setForeground(new java.awt.Color(49, 56, 62));
         jLabel9.setText("Hora salida");
 
-        jTextField2.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+        txt_fecha_entrada.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
+        txt_fecha_entrada.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
+                txt_fecha_entradaActionPerformed(evt);
             }
         });
 
-        jTextField3.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
-        jTextField3.addActionListener(new java.awt.event.ActionListener() {
+        txt_hora_entrada.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
+        txt_hora_entrada.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField3ActionPerformed(evt);
+                txt_hora_entradaActionPerformed(evt);
             }
         });
 
-        jTextField4.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
-        jTextField4.addActionListener(new java.awt.event.ActionListener() {
+        txt_fecha_salida.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
+        txt_fecha_salida.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField4ActionPerformed(evt);
+                txt_fecha_salidaActionPerformed(evt);
             }
         });
 
-        jTextField5.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
-        jTextField5.addActionListener(new java.awt.event.ActionListener() {
+        txt_hora_salida.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
+        txt_hora_salida.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField5ActionPerformed(evt);
+                txt_hora_salidaActionPerformed(evt);
             }
         });
 
@@ -393,11 +492,11 @@ public class Registry extends javax.swing.JFrame {
         jLabel10.setForeground(new java.awt.Color(49, 56, 62));
         jLabel10.setText("Tiempo transcurrido");
 
-        jTextField6.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
-        jTextField6.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jTextField6.addActionListener(new java.awt.event.ActionListener() {
+        txt_tiempo.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
+        txt_tiempo.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        txt_tiempo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField6ActionPerformed(evt);
+                txt_tiempoActionPerformed(evt);
             }
         });
 
@@ -414,14 +513,14 @@ public class Registry extends javax.swing.JFrame {
                     .addComponent(jLabel9))
                 .addGap(53, 53, 53)
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField5, javax.swing.GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE)
-                    .addComponent(jTextField4)
-                    .addComponent(jTextField3)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE))
+                    .addComponent(txt_hora_salida, javax.swing.GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE)
+                    .addComponent(txt_fecha_salida)
+                    .addComponent(txt_hora_entrada)
+                    .addComponent(txt_fecha_entrada, javax.swing.GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE))
                 .addGap(183, 183, 183)
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jTextField6))
+                    .addComponent(txt_tiempo))
                 .addGap(188, 188, 188))
         );
         jPanel8Layout.setVerticalGroup(
@@ -432,29 +531,29 @@ public class Registry extends javax.swing.JFrame {
                     .addGroup(jPanel8Layout.createSequentialGroup()
                         .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel6)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txt_fecha_entrada, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel7)
-                            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txt_hora_entrada, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel10))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txt_tiempo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel8))
                         .addGap(2, 2, 2))
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txt_fecha_salida, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_hora_salida, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel9))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jTextField7.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
-        jTextField7.addActionListener(new java.awt.event.ActionListener() {
+        txt_pago.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
+        txt_pago.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField7ActionPerformed(evt);
+                txt_pagoActionPerformed(evt);
             }
         });
 
@@ -482,10 +581,10 @@ public class Registry extends javax.swing.JFrame {
         jLabel13.setForeground(new java.awt.Color(49, 56, 62));
         jLabel13.setText("Cambio");
 
-        jTextField9.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
-        jTextField9.addActionListener(new java.awt.event.ActionListener() {
+        txt_cambio.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
+        txt_cambio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField9ActionPerformed(evt);
+                txt_cambioActionPerformed(evt);
             }
         });
 
@@ -508,7 +607,7 @@ public class Registry extends javax.swing.JFrame {
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(jLabel13)
                                 .addGap(58, 58, 58)
-                                .addComponent(jTextField9))
+                                .addComponent(txt_cambio))
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(jLabel12)
                                 .addGap(58, 58, 58)
@@ -516,7 +615,7 @@ public class Registry extends javax.swing.JFrame {
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(jLabel11)
                                 .addGap(62, 62, 62)
-                                .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(txt_pago, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -531,7 +630,7 @@ public class Registry extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11)
-                    .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txt_pago, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel12)
@@ -539,7 +638,7 @@ public class Registry extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel13)
-                    .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txt_cambio, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
                 .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(12, 12, 12))
@@ -566,41 +665,41 @@ public class Registry extends javax.swing.JFrame {
          y = evt.getY();
     }//GEN-LAST:event_formMousePressed
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void txt_placaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_placaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_txt_placaActionPerformed
 
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+    private void txt_fecha_entradaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_fecha_entradaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
+    }//GEN-LAST:event_txt_fecha_entradaActionPerformed
 
-    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
+    private void txt_hora_entradaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_hora_entradaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField3ActionPerformed
+    }//GEN-LAST:event_txt_hora_entradaActionPerformed
 
-    private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
+    private void txt_fecha_salidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_fecha_salidaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField4ActionPerformed
+    }//GEN-LAST:event_txt_fecha_salidaActionPerformed
 
-    private void jTextField5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField5ActionPerformed
+    private void txt_hora_salidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_hora_salidaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField5ActionPerformed
+    }//GEN-LAST:event_txt_hora_salidaActionPerformed
 
-    private void jTextField6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField6ActionPerformed
+    private void txt_tiempoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_tiempoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField6ActionPerformed
+    }//GEN-LAST:event_txt_tiempoActionPerformed
 
-    private void jTextField7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField7ActionPerformed
+    private void txt_pagoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_pagoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField7ActionPerformed
+    }//GEN-LAST:event_txt_pagoActionPerformed
 
     private void txt_efectivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_efectivoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_efectivoActionPerformed
 
-    private void jTextField9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField9ActionPerformed
+    private void txt_cambioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_cambioActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField9ActionPerformed
+    }//GEN-LAST:event_txt_cambioActionPerformed
     
      // Evento, teclado, - Campo Efectivo
     private void txt_efectivoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_efectivoKeyTyped
@@ -609,10 +708,22 @@ public class Registry extends javax.swing.JFrame {
     }//GEN-LAST:event_txt_efectivoKeyTyped
 
     private void jLabel19MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel19MouseClicked
+        // Boton volver
         Home home = new Home();
         home.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jLabel19MouseClicked
+
+    private void btn_nuevo_ingresoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_nuevo_ingresoActionPerformed
+       // Boton nuevo ingreso
+        desbloquear();
+    }//GEN-LAST:event_btn_nuevo_ingresoActionPerformed
+
+    private void btn_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cancelarActionPerformed
+        // Boton nuevo cancelar
+        bloquear();
+        limpiar();
+    }//GEN-LAST:event_btn_cancelarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -650,13 +761,11 @@ public class Registry extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
+    private javax.swing.JButton btn_cancelar;
+    private javax.swing.JButton btn_ingreso;
+    private javax.swing.JButton btn_liquidacion;
+    private javax.swing.JButton btn_nuevo_ingreso;
+    private javax.swing.JButton btn_pendiente;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -680,14 +789,17 @@ public class Registry extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField7;
-    private javax.swing.JTextField jTextField9;
+    private javax.swing.JLabel jbl_hours;
+    private javax.swing.JComboBox<String> jcb_tarifa;
+    private javax.swing.JComboBox<String> jcb_vehiculo;
+    private javax.swing.JTextField txt_cambio;
     private javax.swing.JTextField txt_efectivo;
+    private javax.swing.JTextField txt_fecha_entrada;
+    private javax.swing.JTextField txt_fecha_salida;
+    private javax.swing.JTextField txt_hora_entrada;
+    private javax.swing.JTextField txt_hora_salida;
+    private javax.swing.JTextField txt_pago;
+    private javax.swing.JTextField txt_placa;
+    private javax.swing.JTextField txt_tiempo;
     // End of variables declaration//GEN-END:variables
 }
