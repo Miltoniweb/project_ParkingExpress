@@ -3,20 +3,96 @@ package soft.java.interfaces;
 
 import java.awt.MouseInfo;
 import java.awt.Point;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import soft.java.conection.MySQLConnection;
 
 
 public class Rate extends javax.swing.JFrame {
 
         int x, y;
   
+    // conector a la Base de datos
+    MySQLConnection conex = new MySQLConnection();
+    Connection con = conex.getConnectionBD();
+        
+        
     public Rate() {
         this.setUndecorated(true);
         initComponents();
         setTitle("Tarifas");
         this.setLocationRelativeTo(null);
+        ShowTable();
+        bloquear();
     }
 
-  
+  // metodo para mostrar la tabla de la Base Datos 
+    void ShowTable(){
+        DefaultTableModel modelo = new DefaultTableModel();       
+            modelo.addColumn("ID Tarifa");
+            modelo.addColumn("Tipo Vehículo");
+            modelo.addColumn("Tipo Tarifa");
+            modelo.addColumn("Valor");
+                table_tarifa.setModel(modelo);         
+            String sql = "SELECT * FROM tarifa";
+            String datos[] = new String[4];
+            Statement st;
+        try {
+            st = con.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+                while (rs.next()){
+                    datos[0] = rs.getString(1); /*ID Tarifa*/
+                    datos[1] = rs.getString(2); /*Tipo Vehículo*/
+                    datos[2] = rs.getString(3); /*Tipo Tarifa*/
+                    datos[3] = rs.getString(4); /*Valor*/
+                        modelo.addRow(datos);
+                }
+                 table_tarifa.setModel(modelo);  
+                
+        } catch (SQLException ex) {
+            Logger.getLogger(Rate.class.getName()).log(Level.SEVERE, null, ex);
+        }
+           
+    }
+    
+    void limpiar(){
+        txt_vehiculo.setText("");
+        txt_tarifa.setText("");
+        txt_valor.setText("");
+        txt_buscar.setText("");
+    }
+    
+    void bloquear(){
+        txt_vehiculo.setEditable(false);
+        txt_tarifa.setEditable(false);
+        txt_valor.setEditable(false);
+            btn_enable.setEnabled(true);
+            btn_disable.setEnabled(false);
+            btn_add.setEnabled(false);
+            btn_modified.setEnabled(false);
+            btn_update.setEnabled(false);
+            btn_delete.setEnabled(false);
+    }
+    
+    void desbloquear(){
+        txt_vehiculo.setEditable(true);
+        txt_tarifa.setEditable(true);
+        txt_valor.setEditable(true);
+            btn_enable.setEnabled(false);
+            btn_disable.setEnabled(true);
+            btn_add.setEnabled(true);
+            btn_modified.setEnabled(true);
+            btn_update.setEnabled(true);
+            btn_delete.setEnabled(true);
+    }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -32,19 +108,23 @@ public class Rate extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        txt_vehiculo = new javax.swing.JTextField();
+        txt_valor = new javax.swing.JTextField();
+        txt_tarifa = new javax.swing.JTextField();
         jPanel5 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        btn_add = new javax.swing.JButton();
+        btn_modified = new javax.swing.JButton();
+        btn_update = new javax.swing.JButton();
+        btn_delete = new javax.swing.JButton();
+        txt_buscar = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        jPanel8 = new javax.swing.JPanel();
+        btn_enable = new javax.swing.JButton();
+        btn_disable = new javax.swing.JButton();
         jPanel6 = new javax.swing.JPanel();
         jPanel7 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        table_tarifa = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
@@ -183,25 +263,34 @@ public class Rate extends javax.swing.JFrame {
         jLabel4.setForeground(new java.awt.Color(49, 56, 62));
         jLabel4.setText("Valor");
 
-        jTextField1.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
-        jTextField1.setPreferredSize(new java.awt.Dimension(14, 35));
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        txt_vehiculo.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
+        txt_vehiculo.setPreferredSize(new java.awt.Dimension(14, 35));
+        txt_vehiculo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                txt_vehiculoActionPerformed(evt);
             }
         });
 
-        jTextField2.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
-        jTextField2.setPreferredSize(new java.awt.Dimension(14, 35));
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+        txt_valor.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
+        txt_valor.setPreferredSize(new java.awt.Dimension(14, 35));
+        txt_valor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
+                txt_valorActionPerformed(evt);
+            }
+        });
+        txt_valor.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_valorKeyTyped(evt);
             }
         });
 
-        jComboBox1.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Por defecto", "Por minuto", "Por hora", "Por día", "Por noche" }));
-        jComboBox1.setPreferredSize(new java.awt.Dimension(33, 35));
+        txt_tarifa.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
+        txt_tarifa.setPreferredSize(new java.awt.Dimension(14, 35));
+        txt_tarifa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_tarifaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -213,167 +302,192 @@ public class Rate extends javax.swing.JFrame {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel4)
                         .addGap(116, 116, 116)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, 237, Short.MAX_VALUE))
+                        .addComponent(txt_valor, javax.swing.GroupLayout.DEFAULT_SIZE, 265, Short.MAX_VALUE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addGap(44, 44, 44)
-                        .addComponent(jComboBox1, 0, 237, Short.MAX_VALUE))
+                        .addComponent(txt_tarifa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addGap(18, 18, 18)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addGap(550, 550, 550))
+                        .addComponent(txt_vehiculo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGap(522, 522, 522))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(27, 27, 27)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_vehiculo, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3))
-                .addGap(21, 21, 21)
+                    .addComponent(jLabel3)
+                    .addComponent(txt_tarifa, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(22, 22, 22)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_valor, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4))
-                .addContainerGap(59, Short.MAX_VALUE))
+                .addContainerGap(58, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 70, 980, 230));
 
         jPanel5.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jButton1.setBackground(new java.awt.Color(255, 255, 255));
-        jButton1.setFont(new java.awt.Font("Ubuntu", 0, 16)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(49, 56, 62));
-        jButton1.setText("Agregar");
-        jButton1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jButton1.setBorderPainted(false);
-        jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jButton1.setFocusable(false);
-        jButton1.setMargin(new java.awt.Insets(48, 16, 16, 48));
-        jButton1.setPreferredSize(new java.awt.Dimension(160, 40));
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btn_add.setBackground(new java.awt.Color(255, 255, 255));
+        btn_add.setFont(new java.awt.Font("Ubuntu", 0, 16)); // NOI18N
+        btn_add.setForeground(new java.awt.Color(49, 56, 62));
+        btn_add.setText("Agregar");
+        btn_add.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        btn_add.setBorderPainted(false);
+        btn_add.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn_add.setFocusable(false);
+        btn_add.setMargin(new java.awt.Insets(48, 16, 16, 48));
+        btn_add.setPreferredSize(new java.awt.Dimension(160, 40));
+        btn_add.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btn_addActionPerformed(evt);
+            }
+        });
+        jPanel5.add(btn_add, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 20, -1, -1));
+
+        btn_modified.setBackground(new java.awt.Color(255, 255, 255));
+        btn_modified.setFont(new java.awt.Font("Ubuntu", 0, 16)); // NOI18N
+        btn_modified.setForeground(new java.awt.Color(49, 56, 62));
+        btn_modified.setText("Modificar");
+        btn_modified.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        btn_modified.setBorderPainted(false);
+        btn_modified.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn_modified.setFocusable(false);
+        btn_modified.setMargin(new java.awt.Insets(48, 16, 16, 48));
+        btn_modified.setPreferredSize(new java.awt.Dimension(160, 40));
+        btn_modified.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_modifiedActionPerformed(evt);
+            }
+        });
+        jPanel5.add(btn_modified, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 20, -1, -1));
+
+        btn_update.setBackground(new java.awt.Color(255, 255, 255));
+        btn_update.setFont(new java.awt.Font("Ubuntu", 0, 16)); // NOI18N
+        btn_update.setForeground(new java.awt.Color(49, 56, 62));
+        btn_update.setText("Actualizar");
+        btn_update.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        btn_update.setBorderPainted(false);
+        btn_update.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn_update.setFocusable(false);
+        btn_update.setMargin(new java.awt.Insets(48, 16, 16, 48));
+        btn_update.setPreferredSize(new java.awt.Dimension(160, 40));
+        btn_update.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_updateActionPerformed(evt);
+            }
+        });
+        jPanel5.add(btn_update, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 20, -1, -1));
+
+        btn_delete.setBackground(new java.awt.Color(255, 255, 255));
+        btn_delete.setFont(new java.awt.Font("Ubuntu", 0, 16)); // NOI18N
+        btn_delete.setForeground(new java.awt.Color(49, 56, 62));
+        btn_delete.setText("Eliminar");
+        btn_delete.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        btn_delete.setBorderPainted(false);
+        btn_delete.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn_delete.setFocusable(false);
+        btn_delete.setMargin(new java.awt.Insets(48, 16, 16, 48));
+        btn_delete.setPreferredSize(new java.awt.Dimension(160, 40));
+        btn_delete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_deleteActionPerformed(evt);
+            }
+        });
+        jPanel5.add(btn_delete, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 20, -1, -1));
+
+        txt_buscar.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
+        txt_buscar.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txt_buscar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        txt_buscar.setEnabled(false);
+        txt_buscar.setFocusable(false);
+        jPanel5.add(txt_buscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 40, 50, -1));
+
+        jLabel6.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
+        jLabel6.setText("ID");
+        jPanel5.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(606, 24, 26, -1));
+
+        btn_enable.setBackground(new java.awt.Color(255, 255, 255));
+        btn_enable.setFont(new java.awt.Font("Ubuntu", 0, 16)); // NOI18N
+        btn_enable.setForeground(new java.awt.Color(49, 56, 62));
+        btn_enable.setText("Habilitar");
+        btn_enable.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        btn_enable.setBorderPainted(false);
+        btn_enable.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn_enable.setFocusable(false);
+        btn_enable.setMargin(new java.awt.Insets(48, 16, 16, 48));
+        btn_enable.setPreferredSize(new java.awt.Dimension(160, 40));
+        btn_enable.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_enableActionPerformed(evt);
             }
         });
 
-        jButton2.setBackground(new java.awt.Color(255, 255, 255));
-        jButton2.setFont(new java.awt.Font("Ubuntu", 0, 16)); // NOI18N
-        jButton2.setForeground(new java.awt.Color(49, 56, 62));
-        jButton2.setText("Cancelar");
-        jButton2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jButton2.setBorderPainted(false);
-        jButton2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jButton2.setFocusable(false);
-        jButton2.setMargin(new java.awt.Insets(48, 16, 16, 48));
-        jButton2.setPreferredSize(new java.awt.Dimension(160, 40));
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btn_disable.setBackground(new java.awt.Color(255, 255, 255));
+        btn_disable.setFont(new java.awt.Font("Ubuntu", 0, 16)); // NOI18N
+        btn_disable.setForeground(new java.awt.Color(49, 56, 62));
+        btn_disable.setText("Cancelar");
+        btn_disable.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        btn_disable.setBorderPainted(false);
+        btn_disable.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn_disable.setFocusable(false);
+        btn_disable.setMargin(new java.awt.Insets(48, 16, 16, 48));
+        btn_disable.setPreferredSize(new java.awt.Dimension(160, 40));
+        btn_disable.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btn_disableActionPerformed(evt);
             }
         });
 
-        jButton3.setBackground(new java.awt.Color(255, 255, 255));
-        jButton3.setFont(new java.awt.Font("Ubuntu", 0, 16)); // NOI18N
-        jButton3.setForeground(new java.awt.Color(49, 56, 62));
-        jButton3.setText("Modificar");
-        jButton3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jButton3.setBorderPainted(false);
-        jButton3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jButton3.setFocusable(false);
-        jButton3.setMargin(new java.awt.Insets(48, 16, 16, 48));
-        jButton3.setPreferredSize(new java.awt.Dimension(160, 40));
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
-
-        jButton4.setBackground(new java.awt.Color(255, 255, 255));
-        jButton4.setFont(new java.awt.Font("Ubuntu", 0, 16)); // NOI18N
-        jButton4.setForeground(new java.awt.Color(49, 56, 62));
-        jButton4.setText("Actualizar");
-        jButton4.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jButton4.setBorderPainted(false);
-        jButton4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jButton4.setFocusable(false);
-        jButton4.setMargin(new java.awt.Insets(48, 16, 16, 48));
-        jButton4.setPreferredSize(new java.awt.Dimension(160, 40));
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
-            }
-        });
-
-        jButton5.setBackground(new java.awt.Color(255, 255, 255));
-        jButton5.setFont(new java.awt.Font("Ubuntu", 0, 16)); // NOI18N
-        jButton5.setForeground(new java.awt.Color(49, 56, 62));
-        jButton5.setText("Eliminar");
-        jButton5.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
-        jButton5.setBorderPainted(false);
-        jButton5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jButton5.setFocusable(false);
-        jButton5.setMargin(new java.awt.Insets(48, 16, 16, 48));
-        jButton5.setPreferredSize(new java.awt.Dimension(160, 40));
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-        jPanel5.setLayout(jPanel5Layout);
-        jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(25, 25, 25)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
-                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
-                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
-                .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(24, 24, 24))
+        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
+        jPanel8.setLayout(jPanel8Layout);
+        jPanel8Layout.setHorizontalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btn_enable, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btn_disable, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(9, Short.MAX_VALUE))
         );
-        jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                .addContainerGap(23, Short.MAX_VALUE)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(24, 24, 24))
+        jPanel8Layout.setVerticalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btn_enable, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_disable, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(8, Short.MAX_VALUE))
         );
 
-        getContentPane().add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 300, 980, -1));
+        jPanel5.add(jPanel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, -1));
+
+        getContentPane().add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 300, 980, 80));
 
         jPanel6.setBackground(new java.awt.Color(240, 240, 242));
 
         jPanel7.setBackground(new java.awt.Color(255, 255, 255));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        table_tarifa.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        table_tarifa.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        table_tarifa.setGridColor(new java.awt.Color(255, 255, 255));
+        table_tarifa.setRowHeight(25);
+        jScrollPane1.setViewportView(table_tarifa);
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
@@ -418,34 +532,75 @@ public class Rate extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_jLabel5MouseClicked
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void txt_vehiculoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_vehiculoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
-
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+    }//GEN-LAST:event_txt_vehiculoActionPerformed
+    private void txt_valorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_valorActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
-
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
-
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton4ActionPerformed
-
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton5ActionPerformed
-
+    }//GEN-LAST:event_txt_valorActionPerformed
+    private void btn_addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_addActionPerformed
+       // Boton Guardar
+        try {
+            PreparedStatement pps = con.prepareStatement("INSERT INTO tarifa (tipo_vehiculo,tipo_tarifa,valor) VALUES (?,?,?)");
+            pps.setString(1, txt_vehiculo.getText());
+            pps.setString(2, txt_tarifa.getText());
+            pps.setString(3, txt_valor.getText());
+            pps.executeUpdate();
+            pps.close();
+            JOptionPane.showMessageDialog(null, "Datos Almacenados");
+            ShowTable();
+            limpiar();
+        } catch (SQLException ex) {
+            Logger.getLogger(Rate.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btn_addActionPerformed
+    private void btn_modifiedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_modifiedActionPerformed
+        // Boton Modificar
+        int fila = table_tarifa.getSelectedRow();
+        if(fila>=0){
+            txt_buscar.setText(table_tarifa.getValueAt(fila, 0).toString());
+            txt_vehiculo.setText(table_tarifa.getValueAt(fila, 1).toString());
+            txt_tarifa.setText(table_tarifa.getValueAt(fila, 2).toString());
+            txt_valor.setText(table_tarifa.getValueAt(fila, 3).toString());
+            btn_add.setEnabled(false);
+            btn_delete.setEnabled(false);
+            btn_modified.setEnabled(false);
+        }else{
+            JOptionPane.showMessageDialog(null, "Fila no seleccionada");
+        }
+    }//GEN-LAST:event_btn_modifiedActionPerformed
+    private void btn_updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_updateActionPerformed
+       // Boton Actualizar
+        try {
+            PreparedStatement pps = con.prepareStatement("UPDATE tarifa SET tipo_vehiculo='"+txt_vehiculo.getText()+"',tipo_tarifa='"+txt_tarifa.getText()
+                +"',valor='"+txt_valor.getText()+"' WHERE id_tarifa ='"+txt_buscar.getText()+"'");
+            pps.executeUpdate();
+            pps.close();
+            JOptionPane.showMessageDialog(null, "Datos Actualizados");
+            limpiar();
+            btn_add.setEnabled(true);
+            btn_delete.setEnabled(true);
+            ShowTable();
+        } catch (SQLException ex) {
+            Logger.getLogger(Rate.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btn_updateActionPerformed
+    private void btn_deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_deleteActionPerformed
+        // Boton Eliminar
+        int fila = table_tarifa.getSelectedRow();
+        String valor = table_tarifa.getValueAt(fila, 0).toString();
+        if(fila>=0){
+            try {
+                PreparedStatement pps = con.prepareStatement("DELETE FROM tarifa WHERE id_tarifa='"+valor+"'");
+                pps.executeUpdate();
+                pps.close();
+                JOptionPane.showMessageDialog(null, "Dato Eliminado");
+                ShowTable();
+            } catch (SQLException ex) {
+                Logger.getLogger(Rate.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_btn_deleteActionPerformed
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
       
     }//GEN-LAST:event_formKeyPressed
@@ -467,6 +622,24 @@ public class Rate extends javax.swing.JFrame {
         home.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jLabel19MouseClicked
+
+    private void txt_tarifaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_tarifaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_tarifaActionPerformed
+
+    private void txt_valorKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_valorKeyTyped
+        char inputText = evt.getKeyChar();
+        if (inputText<'0' || inputText>'9') evt.consume();
+    }//GEN-LAST:event_txt_valorKeyTyped
+
+    private void btn_enableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_enableActionPerformed
+        desbloquear();
+    }//GEN-LAST:event_btn_enableActionPerformed
+
+    private void btn_disableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_disableActionPerformed
+        bloquear();
+        limpiar();
+    }//GEN-LAST:event_btn_disableActionPerformed
 
     /**
      * @param args the command line arguments
@@ -504,12 +677,12 @@ public class Rate extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JButton btn_add;
+    private javax.swing.JButton btn_delete;
+    private javax.swing.JButton btn_disable;
+    private javax.swing.JButton btn_enable;
+    private javax.swing.JButton btn_modified;
+    private javax.swing.JButton btn_update;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
@@ -517,6 +690,7 @@ public class Rate extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -524,9 +698,12 @@ public class Rate extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
+    private javax.swing.JPanel jPanel8;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTable table_tarifa;
+    private javax.swing.JTextField txt_buscar;
+    private javax.swing.JTextField txt_tarifa;
+    private javax.swing.JTextField txt_valor;
+    private javax.swing.JTextField txt_vehiculo;
     // End of variables declaration//GEN-END:variables
 }

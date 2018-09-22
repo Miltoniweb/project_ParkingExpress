@@ -514,6 +514,7 @@ public class Registry extends javax.swing.JFrame {
         });
 
         txt_fecha_salida.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
+        txt_fecha_salida.setForeground(new java.awt.Color(240, 92, 44));
         txt_fecha_salida.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txt_fecha_salidaActionPerformed(evt);
@@ -521,6 +522,7 @@ public class Registry extends javax.swing.JFrame {
         });
 
         txt_hora_salida.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
+        txt_hora_salida.setForeground(new java.awt.Color(240, 92, 44));
         txt_hora_salida.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txt_hora_salidaActionPerformed(evt);
