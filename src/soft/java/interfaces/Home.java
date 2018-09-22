@@ -40,8 +40,8 @@ public class Home extends javax.swing.JFrame {
       
         public void actionPerformed(ActionEvent e){
             Date getHours = new Date();
-            String workingDay = "hh:mm a";
-            SimpleDateFormat format = new SimpleDateFormat(workingDay);
+            String hourFormat = "hh:mm a";
+            SimpleDateFormat format = new SimpleDateFormat(hourFormat);
             Calendar calendar = Calendar.getInstance(); 
                 jbl_hours.setText(String.format(format.format(getHours), calendar));    
                  
@@ -155,7 +155,7 @@ public class Home extends javax.swing.JFrame {
         rs_calendar.setForeground(new java.awt.Color(255, 255, 255));
         rs_calendar.setAltoFilas(20);
         rs_calendar.setAltoHead(35);
-        rs_calendar.setColorDiaActual(new java.awt.Color(240, 92, 44));
+        rs_calendar.setColorDiaActual(new java.awt.Color(3, 146, 222));
         rs_calendar.setEnabled(false);
         rs_calendar.setFocusable(false);
         rs_calendar.setFont(new java.awt.Font("Ubuntu", 0, 12)); // NOI18N

@@ -202,7 +202,7 @@
             <Property name="altoFilas" type="int" value="20"/>
             <Property name="altoHead" type="int" value="35"/>
             <Property name="colorDiaActual" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="2c" green="5c" red="f0" type="rgb"/>
+              <Color blue="de" green="92" red="3" type="rgb"/>
             </Property>
             <Property name="enabled" type="boolean" value="false"/>
             <Property name="focusable" type="boolean" value="false"/>

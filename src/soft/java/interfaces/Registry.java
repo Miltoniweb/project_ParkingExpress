@@ -37,8 +37,8 @@ public class Registry extends javax.swing.JFrame {
       
         public void actionPerformed(ActionEvent e){
             Date getHours = new Date();
-            String workingDay = "hh:mm a";
-            SimpleDateFormat format = new SimpleDateFormat(workingDay);
+            String hourFormat = "hh:mm a";
+            SimpleDateFormat format = new SimpleDateFormat(hourFormat);
             Calendar calendar = Calendar.getInstance(); 
                 jbl_hours.setText(String.format(format.format(getHours), calendar));    
                  
@@ -57,7 +57,7 @@ public class Registry extends javax.swing.JFrame {
         txt_fecha_salida.setEditable(false);        
         txt_hora_salida.setEditable(false);
         txt_pago.setEditable(false);
-        txt_efectivo.setEditable(true);
+        txt_efectivo.setEditable(false);
         txt_cambio.setEditable(false);
         txt_tiempo.setEditable(false);
             btn_nuevo_ingreso.setEnabled(false);
@@ -98,6 +98,21 @@ public class Registry extends javax.swing.JFrame {
         txt_efectivo.setText("");
         txt_cambio.setText("");
         txt_tiempo.setText("");
+    }
+    
+    void getFecha(){
+       Date currentDate = new Date();
+        String dateFormat = "dd/MM/yyyy";
+        SimpleDateFormat format = new SimpleDateFormat(dateFormat);
+            txt_fecha_entrada.setText(String.format(format.format(currentDate), format));
+    }
+    
+    void getHours(){
+        Date getHours = new Date();
+        String hourFormat = "hh:mm:ss a";
+        SimpleDateFormat format = new SimpleDateFormat(hourFormat);
+        Calendar calendar = Calendar.getInstance(); 
+            txt_hora_entrada.setText(String.format(format.format(getHours), calendar)); 
     }
     
     @SuppressWarnings("unchecked")
@@ -639,7 +654,8 @@ public class Registry extends javax.swing.JFrame {
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(jLabel11)
                                 .addGap(62, 62, 62)
-                                .addComponent(txt_pago, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(txt_pago, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -655,7 +671,7 @@ public class Registry extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11)
                     .addComponent(txt_pago, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(6, 6, 6)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel12)
                     .addComponent(txt_efectivo, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -692,35 +708,27 @@ public class Registry extends javax.swing.JFrame {
     private void txt_placaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_placaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_placaActionPerformed
-
     private void txt_fecha_entradaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_fecha_entradaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_fecha_entradaActionPerformed
-
     private void txt_hora_entradaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_hora_entradaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_hora_entradaActionPerformed
-
     private void txt_fecha_salidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_fecha_salidaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_fecha_salidaActionPerformed
-
     private void txt_hora_salidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_hora_salidaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_hora_salidaActionPerformed
-
     private void txt_tiempoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_tiempoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_tiempoActionPerformed
-
     private void txt_pagoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_pagoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_pagoActionPerformed
-
     private void txt_efectivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_efectivoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_efectivoActionPerformed
-
     private void txt_cambioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_cambioActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_cambioActionPerformed
@@ -740,12 +748,16 @@ public class Registry extends javax.swing.JFrame {
 
     private void btn_nuevo_ingresoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_nuevo_ingresoActionPerformed
        // Boton nuevo ingreso
-        desbloquear();
+       desbloquear();
+       // Captura la fecha
+       getFecha();
+       // Captura la hora
+       getHours();
+       
     }//GEN-LAST:event_btn_nuevo_ingresoActionPerformed
 
     private void btn_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cancelarActionPerformed
         // Boton nuevo cancelar
-        
         bloquear();
         limpiar();
     }//GEN-LAST:event_btn_cancelarActionPerformed
