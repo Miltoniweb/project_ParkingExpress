@@ -37,7 +37,6 @@ public class Rate extends javax.swing.JFrame {
     void ShowTable(){
         DefaultTableModel modelo = new DefaultTableModel();       
             modelo.addColumn("ID Tarifa");
-            modelo.addColumn("Tipo Vehículo");
             modelo.addColumn("Tipo Tarifa");
             modelo.addColumn("Valor");
                 table_tarifa.setModel(modelo);         
@@ -49,9 +48,8 @@ public class Rate extends javax.swing.JFrame {
             ResultSet rs = st.executeQuery(sql);
                 while (rs.next()){
                     datos[0] = rs.getString(1); /*ID Tarifa*/
-                    datos[1] = rs.getString(2); /*Tipo Vehículo*/
-                    datos[2] = rs.getString(3); /*Tipo Tarifa*/
-                    datos[3] = rs.getString(4); /*Valor*/
+                    datos[1] = rs.getString(2); /*Tipo Tarifa*/
+                    datos[2] = rs.getString(3); /*Valor*/
                         modelo.addRow(datos);
                 }
                  table_tarifa.setModel(modelo);  
@@ -63,14 +61,12 @@ public class Rate extends javax.swing.JFrame {
     }
     
     void limpiar(){
-        txt_vehiculo.setText("");
         txt_tarifa.setText("");
         txt_valor.setText("");
         txt_buscar.setText("");
     }
     
     void bloquear(){
-        txt_vehiculo.setEditable(false);
         txt_tarifa.setEditable(false);
         txt_valor.setEditable(false);
             btn_enable.setEnabled(true);
@@ -82,7 +78,6 @@ public class Rate extends javax.swing.JFrame {
     }
     
     void desbloquear(){
-        txt_vehiculo.setEditable(true);
         txt_tarifa.setEditable(true);
         txt_valor.setEditable(true);
             btn_enable.setEnabled(false);
@@ -105,10 +100,8 @@ public class Rate extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        txt_vehiculo = new javax.swing.JTextField();
         txt_valor = new javax.swing.JTextField();
         txt_tarifa = new javax.swing.JTextField();
         jPanel5 = new javax.swing.JPanel();
@@ -251,10 +244,6 @@ public class Rate extends javax.swing.JFrame {
 
         jPanel3.setBackground(new java.awt.Color(240, 240, 242));
 
-        jLabel2.setFont(new java.awt.Font("Roboto", 0, 20)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(49, 56, 62));
-        jLabel2.setText("Tipo de vehículo");
-
         jLabel3.setFont(new java.awt.Font("Roboto", 0, 20)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(49, 56, 62));
         jLabel3.setText("Tipo de tarifa");
@@ -262,14 +251,6 @@ public class Rate extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Roboto", 0, 20)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(49, 56, 62));
         jLabel4.setText("Valor");
-
-        txt_vehiculo.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
-        txt_vehiculo.setPreferredSize(new java.awt.Dimension(14, 35));
-        txt_vehiculo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt_vehiculoActionPerformed(evt);
-            }
-        });
 
         txt_valor.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
         txt_valor.setPreferredSize(new java.awt.Dimension(14, 35));
@@ -297,7 +278,7 @@ public class Rate extends javax.swing.JFrame {
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(30, 30, 30)
+                .addGap(32, 32, 32)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel4)
@@ -306,21 +287,13 @@ public class Rate extends javax.swing.JFrame {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addGap(44, 44, 44)
-                        .addComponent(txt_tarifa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(18, 18, 18)
-                        .addComponent(txt_vehiculo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addGap(522, 522, 522))
+                        .addComponent(txt_tarifa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGap(520, 520, 520))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(27, 27, 27)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txt_vehiculo, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
-                .addGap(18, 18, 18)
+                .addGap(58, 58, 58)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(txt_tarifa, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -328,7 +301,7 @@ public class Rate extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txt_valor, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4))
-                .addContainerGap(58, Short.MAX_VALUE))
+                .addContainerGap(80, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 70, 980, 230));
@@ -532,19 +505,15 @@ public class Rate extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_jLabel5MouseClicked
 
-    private void txt_vehiculoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_vehiculoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txt_vehiculoActionPerformed
     private void txt_valorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_valorActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_valorActionPerformed
     private void btn_addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_addActionPerformed
        // Boton Guardar
         try {
-            PreparedStatement pps = con.prepareStatement("INSERT INTO tarifa (tipo_vehiculo,tipo_tarifa,valor) VALUES (?,?,?)");
-            pps.setString(1, txt_vehiculo.getText());
-            pps.setString(2, txt_tarifa.getText());
-            pps.setString(3, txt_valor.getText());
+            PreparedStatement pps = con.prepareStatement("INSERT INTO tarifa (tipo_tarifa,valor) VALUES (?,?)");
+            pps.setString(1, txt_tarifa.getText());
+            pps.setString(2, txt_valor.getText());
             pps.executeUpdate();
             pps.close();
             JOptionPane.showMessageDialog(null, "Datos Almacenados");
@@ -559,7 +528,6 @@ public class Rate extends javax.swing.JFrame {
         int fila = table_tarifa.getSelectedRow();
         if(fila>=0){
             txt_buscar.setText(table_tarifa.getValueAt(fila, 0).toString());
-            txt_vehiculo.setText(table_tarifa.getValueAt(fila, 1).toString());
             txt_tarifa.setText(table_tarifa.getValueAt(fila, 2).toString());
             txt_valor.setText(table_tarifa.getValueAt(fila, 3).toString());
             btn_add.setEnabled(false);
@@ -572,7 +540,7 @@ public class Rate extends javax.swing.JFrame {
     private void btn_updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_updateActionPerformed
        // Boton Actualizar
         try {
-            PreparedStatement pps = con.prepareStatement("UPDATE tarifa SET tipo_vehiculo='"+txt_vehiculo.getText()+"',tipo_tarifa='"+txt_tarifa.getText()
+            PreparedStatement pps = con.prepareStatement("UPDATE tarifa SET tipo_tarifa='"+txt_tarifa.getText()
                 +"',valor='"+txt_valor.getText()+"' WHERE id_tarifa ='"+txt_buscar.getText()+"'");
             pps.executeUpdate();
             pps.close();
@@ -634,6 +602,7 @@ public class Rate extends javax.swing.JFrame {
 
     private void btn_enableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_enableActionPerformed
         desbloquear();
+        txt_tarifa.grabFocus();
     }//GEN-LAST:event_btn_enableActionPerformed
 
     private void btn_disableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_disableActionPerformed
@@ -685,7 +654,6 @@ public class Rate extends javax.swing.JFrame {
     private javax.swing.JButton btn_update;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel19;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -704,6 +672,5 @@ public class Rate extends javax.swing.JFrame {
     private javax.swing.JTextField txt_buscar;
     private javax.swing.JTextField txt_tarifa;
     private javax.swing.JTextField txt_valor;
-    private javax.swing.JTextField txt_vehiculo;
     // End of variables declaration//GEN-END:variables
 }

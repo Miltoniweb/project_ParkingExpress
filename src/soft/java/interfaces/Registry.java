@@ -12,6 +12,8 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.Timer;
 import soft.java.conection.MySQLConnection;
@@ -132,20 +134,12 @@ public class Registry extends javax.swing.JFrame {
     
     // Metodo para obtener datos 'tipo vehiculo' de la base datos
     void getVehiculo(){
-        
-        try {
-            String sql = "SELECT tipo_vehiculo FROM tarifa";
-            PreparedStatement pps = con.prepareStatement(sql);
-            ResultSet rs = pps.executeQuery(sql);
-                jcb_vehiculo.addItem("Seleccione vehículo");
-            while(rs.next()){
-                jcb_vehiculo.addItem(rs.getString("tipo_vehiculo"));
-            }
-            rs.close();
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "No hay resultado");
-        }
-        
+        jcb_vehiculo.addItem("Seleccione vehículo");
+        jcb_vehiculo.addItem("Automovil");
+        jcb_vehiculo.addItem("Motocicleta");
+        jcb_vehiculo.addItem("Bicicleta");
+        jcb_vehiculo.addItem("Otro");
+  
     }
     
     void getTarifa(){
@@ -324,28 +318,28 @@ public class Registry extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jbl_hours, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel20)
-                            .addGap(14, 14, 14))
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addGap(16, 16, 16)
-                            .addComponent(rs_calendar, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jbl_hours, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(53, 53, 53)
-                .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(16, 16, 16)
+                        .addComponent(rs_calendar, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(53, 53, 53)
+                        .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(61, 61, 61)
+                        .addComponent(jLabel20)))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(54, 54, 54)
+                .addGap(53, 53, 53)
                 .addComponent(jLabel20)
-                .addGap(50, 50, 50)
+                .addGap(51, 51, 51)
                 .addComponent(rs_calendar, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jbl_hours, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -429,6 +423,11 @@ public class Registry extends javax.swing.JFrame {
         btn_ingreso.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btn_ingreso.setFocusPainted(false);
         btn_ingreso.setPreferredSize(new java.awt.Dimension(170, 28));
+        btn_ingreso.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_ingresoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -803,11 +802,13 @@ public class Registry extends javax.swing.JFrame {
     private void btn_nuevo_ingresoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_nuevo_ingresoActionPerformed
        // Boton nuevo ingreso
        desbloquear();
+       btn_ingreso.setEnabled(true);
        // Captura la fecha
        getFecha();
        // Captura la hora
        getHours();
-       
+       // Enfoque campo texto placa
+       txt_placa.grabFocus();
     }//GEN-LAST:event_btn_nuevo_ingresoActionPerformed
 
     private void btn_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cancelarActionPerformed
@@ -815,6 +816,11 @@ public class Registry extends javax.swing.JFrame {
         bloquear();
         limpiar();
     }//GEN-LAST:event_btn_cancelarActionPerformed
+
+    private void btn_ingresoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ingresoActionPerformed
+       // Boton Dar ingreso       
+
+    }//GEN-LAST:event_btn_ingresoActionPerformed
 
     /**
      * @param args the command line arguments
