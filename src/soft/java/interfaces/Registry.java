@@ -6,9 +6,13 @@ import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import javax.swing.JOptionPane;
 import javax.swing.Timer;
 import soft.java.conection.MySQLConnection;
 
@@ -29,6 +33,8 @@ public class Registry extends javax.swing.JFrame {
         // Ejecuta la hora del sistema
         Timer time = new Timer(1000, new Registry.currentHour());
         time.start();
+        getVehiculo();
+        getTarifa();
         bloquear();
     }
     
@@ -61,6 +67,10 @@ public class Registry extends javax.swing.JFrame {
         txt_cambio.setEditable(false);
         txt_tiempo.setEditable(false);
             btn_nuevo_ingreso.setEnabled(false);
+            jcb_vehiculo.setEnabled(true);
+            jcb_tarifa.setEnabled(true);
+            jcb_vehiculo.setEditable(false);
+            jcb_tarifa.setEditable(false);
             btn_ingreso.setEnabled(false);
             btn_cancelar.setEnabled(true);
             btn_pendiente.setEnabled(true);
@@ -81,12 +91,15 @@ public class Registry extends javax.swing.JFrame {
         txt_cambio.setEditable(false);
         txt_tiempo.setEditable(false);
             btn_nuevo_ingreso.setEnabled(true);
+            jcb_vehiculo.setEnabled(false);
+            jcb_tarifa.setEnabled(false);
             btn_ingreso.setEnabled(false);
             btn_cancelar.setEnabled(false);
             btn_pendiente.setEnabled(false);
             btn_liquidacion.setEnabled(false);   
     }
     
+    // Metodo para limpiar campos de texto
     void limpiar(){
         txt_placa.setText("");
         txt_fecha_entrada.setText("");
@@ -100,6 +113,7 @@ public class Registry extends javax.swing.JFrame {
         txt_tiempo.setText("");
     }
     
+    // Metodo para obtener la fecha del sistema
     void getFecha(){
        Date currentDate = new Date();
         String dateFormat = "dd/MM/yyyy";
@@ -107,12 +121,47 @@ public class Registry extends javax.swing.JFrame {
             txt_fecha_entrada.setText(String.format(format.format(currentDate), format));
     }
     
+    // Metodo para obtener la hora del sistema
     void getHours(){
         Date getHours = new Date();
         String hourFormat = "hh:mm:ss a";
         SimpleDateFormat format = new SimpleDateFormat(hourFormat);
         Calendar calendar = Calendar.getInstance(); 
             txt_hora_entrada.setText(String.format(format.format(getHours), calendar)); 
+    }
+    
+    // Metodo para obtener datos 'tipo vehiculo' de la base datos
+    void getVehiculo(){
+        
+        try {
+            String sql = "SELECT tipo_vehiculo FROM tarifa";
+            PreparedStatement pps = con.prepareStatement(sql);
+            ResultSet rs = pps.executeQuery(sql);
+                jcb_vehiculo.addItem("Seleccione vehículo");
+            while(rs.next()){
+                jcb_vehiculo.addItem(rs.getString("tipo_vehiculo"));
+            }
+            rs.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "No hay resultado");
+        }
+        
+    }
+    
+    void getTarifa(){
+                
+        try {
+            String sql = "SELECT tipo_tarifa FROM tarifa";
+            PreparedStatement pps = con.prepareStatement(sql);
+            ResultSet rs = pps.executeQuery(sql);
+                jcb_tarifa.addItem("Seleccione tarifa");   
+            while(rs.next()){
+                jcb_tarifa.addItem(rs.getString("tipo_tarifa"));
+            }
+            rs.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "No hay resultado");
+        }         
     }
     
     @SuppressWarnings("unchecked")
@@ -274,21 +323,22 @@ public class Registry extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jbl_hours, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel20)
+                            .addGap(14, 14, 14))
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addGap(16, 16, 16)
+                            .addComponent(rs_calendar, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(18, 18, 18))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(56, 56, 56)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel20)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(16, 16, 16)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(rs_calendar, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(48, 48, 48)
-                                .addComponent(jbl_hours, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addGap(53, 53, 53)
+                .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -327,6 +377,7 @@ public class Registry extends javax.swing.JFrame {
             }
         });
 
+        jcb_vehiculo.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
         jcb_vehiculo.setPreferredSize(new java.awt.Dimension(33, 35));
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
@@ -366,6 +417,7 @@ public class Registry extends javax.swing.JFrame {
         jLabel4.setForeground(new java.awt.Color(49, 56, 62));
         jLabel4.setText("Tarifa");
 
+        jcb_tarifa.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
         jcb_tarifa.setPreferredSize(new java.awt.Dimension(33, 35));
 
         btn_ingreso.setBackground(new java.awt.Color(255, 255, 255));
