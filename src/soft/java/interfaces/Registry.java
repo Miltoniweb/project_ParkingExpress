@@ -118,9 +118,11 @@ public class Registry extends javax.swing.JFrame {
     // Metodo para obtener la fecha del sistema
     void getFecha(){
        Date currentDate = new Date();
-        String dateFormat = "dd/MM/yyyy";
+        String dateFormat = "yyyy-MM-dd";
         SimpleDateFormat format = new SimpleDateFormat(dateFormat);
             txt_fecha_entrada.setText(String.format(format.format(currentDate), format));
+            
+
     }
     
     // Metodo para obtener la hora del sistema
@@ -134,12 +136,19 @@ public class Registry extends javax.swing.JFrame {
     
     // Metodo para obtener datos 'tipo vehiculo' de la base datos
     void getVehiculo(){
-        jcb_vehiculo.addItem("Seleccione vehículo");
-        jcb_vehiculo.addItem("Automovil");
-        jcb_vehiculo.addItem("Motocicleta");
-        jcb_vehiculo.addItem("Bicicleta");
-        jcb_vehiculo.addItem("Otro");
-  
+        
+        try {
+            String sql = "SELECT tipo_vehiculo FROM vehiculo";
+            PreparedStatement pps = con.prepareStatement(sql);
+            ResultSet rs = pps.executeQuery(sql);
+                jcb_vehiculo.addItem("Seleccione vehículo");
+            while(rs.next()){
+                jcb_vehiculo.addItem(rs.getString("tipo_vehiculo"));
+            }
+            rs.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "No hay resultado");
+        } 
     }
     
     void getTarifa(){
