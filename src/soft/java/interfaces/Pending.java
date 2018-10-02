@@ -4,21 +4,27 @@ package soft.java.interfaces;
 import java.awt.MouseInfo;
 import java.awt.Point;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import soft.java.conection.MySQLConnection;
 
 public class Pending extends javax.swing.JFrame {
     
     int x, y;
-  
+    String currentHours = "";
+    String statedFalse = "No disponible";
+    String StatedTrue = "Disponible";
+    
     // conector a la Base de datos
     MySQLConnection conex = new MySQLConnection();
     Connection con = conex.getConnectionBD();
@@ -35,7 +41,8 @@ public class Pending extends javax.swing.JFrame {
 
     // metodo para mostrar la tabla de la Base Datos 
     void ShowTable(){
-        DefaultTableModel modelo = new DefaultTableModel();       
+        DefaultTableModel modelo = new DefaultTableModel();   
+            modelo.addColumn("ID Vehículo");
             modelo.addColumn("Placa");
             modelo.addColumn("Tipo Vehículo");
             modelo.addColumn("Fecha Entrada");
@@ -43,20 +50,66 @@ public class Pending extends javax.swing.JFrame {
             modelo.addColumn("Fecha Salida");
             modelo.addColumn("Hora Salida");
             modelo.addColumn("Tipo Tarifa");
-                table_pending.setModel(modelo); 
+            modelo.addColumn("Valor");
+            modelo.addColumn("Estado");
+                table_pending.setModel(modelo);
+            String sql = "SELECT id_vehiculo ,placa, tipo_vehiculo, fecha_entrada, hora_entrada, fecha_salida, hora_salida, tipo_tarifa, valor, estado FROM vehiculo INNER JOIN tarifa ON vehiculo.id_tarifa1 = tarifa.id_tarifa;";
+            String datos[] = new String[10];
+            Statement st;
+        try {
+            st = con.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+                while (rs.next()){
+                    datos[0] = rs.getString(1); /*Id vehiculo*/
+                    datos[1] = rs.getString(2); /*Placa*/
+                    datos[2] = rs.getString(3); /*Tipo vehiculo*/
+                    datos[3] = rs.getString(4); /*Fecha entrada*/
+                    datos[4] = rs.getString(5); /*Hora entrada*/
+                    datos[5] = rs.getString(6); /*Fecha salida*/
+                    datos[6] = rs.getString(7); /*Hora salida*/
+                    datos[7] = rs.getString(8); /*Tipo tarifa*/
+                    datos[8] = rs.getString(9); /*Valor*/
+                    datos[9] = rs.getString(10); /*Estado*/
+
+                        modelo.addRow(datos);
+                }
+                 table_pending.setModel(modelo);  
+                
+        } catch (SQLException ex) {
+            Logger.getLogger(Rate.class.getName()).log(Level.SEVERE, null, ex);
+        }
+           
   
     }
     
     void bloquear(){
         txt_fecha_Salida.setEditable(false);
         txt_hora_salida.setEditable(false);
-            btn_dar_salida.setEnabled(false);        
+            btn_dar_salida.setEnabled(false);
+            btn_disable.setEnabled(false);
+            btn_add.setEnabled(false);
+            btn_modified.setEnabled(false);
+            btn_update.setEnabled(false);
+    }
+    
+    void desbloquear(){
+        btn_disable.setEnabled(true);
+        btn_add.setEnabled(true);
+        btn_modified.setEnabled(true);
+        btn_update.setEnabled(true);
+        btn_dar_salida.setEnabled(true);
+    }
+    
+    void limpiar(){
+        txt_fecha_Salida.setText("");
+        txt_hora_salida.setText("");
+        txt_buscar.setText("");
     }
     
     // Metodo para obtener la fecha del sistema
     void getFecha(){
        Date currentDate = new Date();
-        String dateFormat = "dd/MM/yyyy";
+        String dateFormat = "yyyy-MM-dd";
         SimpleDateFormat format = new SimpleDateFormat(dateFormat);
             txt_fecha_Salida.setText(String.format(format.format(currentDate), format));
     }
@@ -67,7 +120,12 @@ public class Pending extends javax.swing.JFrame {
         String hourFormat = "hh:mm:ss a";
         SimpleDateFormat format = new SimpleDateFormat(hourFormat);
         Calendar calendar = Calendar.getInstance(); 
-            txt_hora_salida.setText(String.format(format.format(getHours), calendar)); 
+            txt_hora_salida.setText(String.format(format.format(getHours), calendar));
+        
+        DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
+            Calendar cal = Calendar.getInstance();
+            Date date = cal.getTime();
+            currentHours = dateFormat.format(date);
     }
     
     @SuppressWarnings("unchecked")
@@ -89,6 +147,11 @@ public class Pending extends javax.swing.JFrame {
         txt_hora_salida = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
+        jPanel8 = new javax.swing.JPanel();
+        btn_add = new javax.swing.JButton();
+        btn_disable = new javax.swing.JButton();
+        btn_modified = new javax.swing.JButton();
+        btn_update = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
@@ -129,9 +192,9 @@ public class Pending extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(312, Short.MAX_VALUE)
+                .addContainerGap(420, Short.MAX_VALUE)
                 .addComponent(jLabel1)
-                .addGap(290, 290, 290)
+                .addGap(322, 322, 322)
                 .addComponent(jLabel5)
                 .addGap(26, 26, 26))
         );
@@ -145,7 +208,7 @@ public class Pending extends javax.swing.JFrame {
                 .addContainerGap(22, Short.MAX_VALUE))
         );
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1000, 70));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1140, 70));
 
         jPanel2.setBackground(new java.awt.Color(240, 240, 242));
 
@@ -167,7 +230,7 @@ public class Pending extends javax.swing.JFrame {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 976, Short.MAX_VALUE)
+                .addComponent(jScrollPane1)
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -232,6 +295,97 @@ public class Pending extends javax.swing.JFrame {
         jLabel8.setForeground(new java.awt.Color(49, 56, 62));
         jLabel8.setText("Hora salida");
 
+        btn_add.setBackground(new java.awt.Color(255, 255, 255));
+        btn_add.setFont(new java.awt.Font("Ubuntu", 0, 16)); // NOI18N
+        btn_add.setForeground(new java.awt.Color(49, 56, 62));
+        btn_add.setText("Agregar");
+        btn_add.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        btn_add.setBorderPainted(false);
+        btn_add.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn_add.setFocusable(false);
+        btn_add.setMargin(new java.awt.Insets(48, 16, 16, 48));
+        btn_add.setPreferredSize(new java.awt.Dimension(160, 40));
+        btn_add.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_addActionPerformed(evt);
+            }
+        });
+
+        btn_disable.setBackground(new java.awt.Color(255, 255, 255));
+        btn_disable.setFont(new java.awt.Font("Ubuntu", 0, 16)); // NOI18N
+        btn_disable.setForeground(new java.awt.Color(49, 56, 62));
+        btn_disable.setText("Cancelar");
+        btn_disable.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        btn_disable.setBorderPainted(false);
+        btn_disable.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn_disable.setFocusable(false);
+        btn_disable.setMargin(new java.awt.Insets(48, 16, 16, 48));
+        btn_disable.setPreferredSize(new java.awt.Dimension(160, 40));
+        btn_disable.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_disableActionPerformed(evt);
+            }
+        });
+
+        btn_modified.setBackground(new java.awt.Color(255, 255, 255));
+        btn_modified.setFont(new java.awt.Font("Ubuntu", 0, 16)); // NOI18N
+        btn_modified.setForeground(new java.awt.Color(49, 56, 62));
+        btn_modified.setText("Modificar");
+        btn_modified.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        btn_modified.setBorderPainted(false);
+        btn_modified.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn_modified.setFocusable(false);
+        btn_modified.setMargin(new java.awt.Insets(48, 16, 16, 48));
+        btn_modified.setPreferredSize(new java.awt.Dimension(160, 40));
+        btn_modified.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_modifiedActionPerformed(evt);
+            }
+        });
+
+        btn_update.setBackground(new java.awt.Color(255, 255, 255));
+        btn_update.setFont(new java.awt.Font("Ubuntu", 0, 16)); // NOI18N
+        btn_update.setForeground(new java.awt.Color(49, 56, 62));
+        btn_update.setText("Actualizar");
+        btn_update.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        btn_update.setBorderPainted(false);
+        btn_update.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn_update.setFocusable(false);
+        btn_update.setMargin(new java.awt.Insets(48, 16, 16, 48));
+        btn_update.setPreferredSize(new java.awt.Dimension(160, 40));
+        btn_update.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_updateActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
+        jPanel8.setLayout(jPanel8Layout);
+        jPanel8Layout.setHorizontalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btn_add, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btn_disable, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btn_modified, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btn_update, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        jPanel8Layout.setVerticalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btn_add, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_disable, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_modified, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_update, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -243,10 +397,10 @@ public class Pending extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addGap(17, 17, 17)
                 .addComponent(btn_generate_salida, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(44, 44, 44)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txt_fecha_Salida, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_fecha_Salida, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txt_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -255,36 +409,39 @@ public class Pending extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txt_hora_salida, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(241, 241, 241)
-                .addComponent(btn_dar_salida, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btn_dar_salida, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(20, 20, 20))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(27, 27, 27)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel8)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel8)
+                            .addComponent(jLabel6))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txt_fecha_Salida, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txt_hora_salida, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addComponent(txt_hora_salida, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(btn_dar_salida, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel6)
+                            .addComponent(btn_dar_salida, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                                 .addComponent(jLabel7)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txt_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(btn_generate_salida, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addContainerGap(37, Short.MAX_VALUE))
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(txt_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txt_fecha_Salida, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(btn_generate_salida, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jPanel8, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
 
-        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 1000, 460));
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 1140, 460));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -318,10 +475,79 @@ public class Pending extends javax.swing.JFrame {
     }//GEN-LAST:event_txt_hora_salidaActionPerformed
 
     private void btn_generate_salidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_generate_salidaActionPerformed
-        getFecha();
-        getHours();
-            btn_dar_salida.setEnabled(true);
+         // Boton Modificar
+        int fila = table_pending.getSelectedRow();
+        if(fila>=0){
+            txt_buscar.setText(table_pending.getValueAt(fila, 0).toString());     
+            getFecha();
+            getHours();
+            desbloquear();
+            btn_generate_salida.setEnabled(false);
+            btn_update.setEnabled(false);
+        }else{
+            JOptionPane.showMessageDialog(null, "Fila no seleccionada");
+        }
+
     }//GEN-LAST:event_btn_generate_salidaActionPerformed
+
+    private void btn_addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_addActionPerformed
+        // Boton Agregar
+        try {                                                                   
+            PreparedStatement pps = con.prepareStatement("UPDATE vehiculo SET fecha_salida='"+txt_fecha_Salida.getText()+"',hora_salida='"+currentHours+"',estado='"+statedFalse+"' WHERE id_vehiculo ='"+txt_buscar.getText()+"'");
+            pps.executeUpdate();
+            pps.close();
+            JOptionPane.showMessageDialog(null, "Datos Actualizados");
+            bloquear();
+            btn_generate_salida.setEnabled(true);
+            limpiar();
+            ShowTable();
+        } catch (SQLException ex) {
+            Logger.getLogger(Rate.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btn_addActionPerformed
+
+    private void btn_disableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_disableActionPerformed
+        limpiar();
+        bloquear();
+        btn_generate_salida.setEnabled(true);
+    }//GEN-LAST:event_btn_disableActionPerformed
+
+    private void btn_modifiedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_modifiedActionPerformed
+        // Boton Modificar
+        limpiar();
+        int fila = table_pending.getSelectedRow();
+        if(fila>=0){
+            txt_buscar.setText(table_pending.getValueAt(fila, 0).toString());
+            txt_fecha_Salida.setText(table_pending.getValueAt(fila, 5).toString());
+            txt_hora_salida.setText(table_pending.getValueAt(fila, 6).toString());
+
+            bloquear();
+            txt_fecha_Salida.setEditable(true);
+            txt_hora_salida.setEditable(true);
+            btn_modified.setEnabled(true);
+            btn_update.setEnabled(true);
+        }else{
+            JOptionPane.showMessageDialog(null, "Fila no seleccionada");
+        }
+    }//GEN-LAST:event_btn_modifiedActionPerformed
+
+    private void btn_updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_updateActionPerformed
+        // Boton Actualizar
+        try {                                                                   
+            PreparedStatement pps = con.prepareStatement("UPDATE vehiculo SET fecha_salida='"+txt_fecha_Salida.getText()+"',hora_salida='"+txt_hora_salida.getText()+"',estado='"+StatedTrue+"' WHERE id_vehiculo ='"+txt_buscar.getText()+"'");
+            pps.executeUpdate();
+            pps.close();
+            JOptionPane.showMessageDialog(null, "Datos Actualizados");
+            desbloquear();
+            bloquear();
+            btn_generate_salida.setEnabled(true);
+
+            limpiar();
+            ShowTable();
+        } catch (SQLException ex) {
+            Logger.getLogger(Rate.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btn_updateActionPerformed
 
 
     public static void main(String args[]) {
@@ -357,8 +583,12 @@ public class Pending extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_add;
     private javax.swing.JButton btn_dar_salida;
+    private javax.swing.JButton btn_disable;
     private javax.swing.JButton btn_generate_salida;
+    private javax.swing.JButton btn_modified;
+    private javax.swing.JButton btn_update;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -367,6 +597,7 @@ public class Pending extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel8;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable table_pending;
     private javax.swing.JTextField txt_buscar;

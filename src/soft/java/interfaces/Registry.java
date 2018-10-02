@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -22,6 +23,7 @@ import soft.java.conection.MySQLConnection;
 public class Registry extends javax.swing.JFrame {
 
     int x, y;
+    String currentHours = "";
     
     // conector a la Base de datos
     MySQLConnection conex = new MySQLConnection();
@@ -121,8 +123,6 @@ public class Registry extends javax.swing.JFrame {
         String dateFormat = "yyyy-MM-dd";
         SimpleDateFormat format = new SimpleDateFormat(dateFormat);
             txt_fecha_entrada.setText(String.format(format.format(currentDate), format));
-            
-
     }
     
     // Metodo para obtener la hora del sistema
@@ -131,19 +131,24 @@ public class Registry extends javax.swing.JFrame {
         String hourFormat = "hh:mm:ss a";
         SimpleDateFormat format = new SimpleDateFormat(hourFormat);
         Calendar calendar = Calendar.getInstance(); 
-            txt_hora_entrada.setText(String.format(format.format(getHours), calendar)); 
+            txt_hora_entrada.setText(String.format(format.format(getHours), calendar));
+
+        DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
+            Calendar cal = Calendar.getInstance();
+            Date date = cal.getTime();
+            currentHours = dateFormat.format(date);
     }
     
     // Metodo para obtener datos 'tipo vehiculo' de la base datos
     void getVehiculo(){
         
         try {
-            String sql = "SELECT tipo_vehiculo FROM vehiculo";
+            String sql = "SELECT type_vehiculo FROM tarifa";
             PreparedStatement pps = con.prepareStatement(sql);
             ResultSet rs = pps.executeQuery(sql);
                 jcb_vehiculo.addItem("Seleccione vehículo");
             while(rs.next()){
-                jcb_vehiculo.addItem(rs.getString("tipo_vehiculo"));
+                jcb_vehiculo.addItem(rs.getString("type_vehiculo"));
             }
             rs.close();
         } catch (SQLException ex) {
@@ -827,8 +832,29 @@ public class Registry extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_cancelarActionPerformed
 
     private void btn_ingresoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ingresoActionPerformed
-       // Boton Dar ingreso       
-
+       // Boton Dar ingreso
+       String selectedVehiculo = jcb_vehiculo.getSelectedItem().toString(); 
+       String StatedTrue = "Disponible";
+    
+    if (selectedVehiculo.equals("Seleccione vehículo")) {
+        JOptionPane.showMessageDialog(null, "Seleccione un tipo de vehículo");
+    }else{ 
+            try {
+                 PreparedStatement pps = con.prepareStatement("INSERT INTO vehiculo (placa, tipo_vehiculo, fecha_entrada, hora_entrada, estado) VALUES (?,?,?,?,?)");
+                 pps.setString(1, txt_placa.getText());
+                 pps.setString(2, selectedVehiculo);
+                 pps.setString(3, txt_fecha_entrada.getText());
+                 pps.setString(4, currentHours);
+                 pps.setString(5, StatedTrue);
+                 pps.executeUpdate();
+                 pps.close();
+                 JOptionPane.showMessageDialog(null, "Datos Almacenados");
+                 limpiar();
+                 bloquear();
+            } catch (SQLException ex) {
+                Logger.getLogger(Rate.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }//GEN-LAST:event_btn_ingresoActionPerformed
 
     /**
