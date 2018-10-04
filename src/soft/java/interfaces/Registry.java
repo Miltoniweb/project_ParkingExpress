@@ -835,26 +835,36 @@ public class Registry extends javax.swing.JFrame {
        // Boton Dar ingreso
        String selectedVehiculo = jcb_vehiculo.getSelectedItem().toString(); 
        String StatedTrue = "Disponible";
+       String emptyPlaca = "";
     
-    if (selectedVehiculo.equals("Seleccione vehículo")) {
-        JOptionPane.showMessageDialog(null, "Seleccione un tipo de vehículo");
-    }else{ 
-            try {
-                 PreparedStatement pps = con.prepareStatement("INSERT INTO vehiculo (placa, tipo_vehiculo, fecha_entrada, hora_entrada, estado) VALUES (?,?,?,?,?)");
-                 pps.setString(1, txt_placa.getText());
-                 pps.setString(2, selectedVehiculo);
-                 pps.setString(3, txt_fecha_entrada.getText());
-                 pps.setString(4, currentHours);
-                 pps.setString(5, StatedTrue);
-                 pps.executeUpdate();
-                 pps.close();
-                 JOptionPane.showMessageDialog(null, "Datos Almacenados");
-                 limpiar();
-                 bloquear();
-            } catch (SQLException ex) {
-                Logger.getLogger(Rate.class.getName()).log(Level.SEVERE, null, ex);
+       if (!txt_placa.getText().equals(emptyPlaca)){
+           
+            if (selectedVehiculo.equals("Seleccione vehículo")) {
+                JOptionPane.showMessageDialog(null, "Seleccione un tipo de vehículo");
+            }else{ 
+                try {
+                     PreparedStatement pps = con.prepareStatement("INSERT INTO vehiculo (placa, tipo_vehiculo, fecha_entrada, hora_entrada, estado) VALUES (?,?,?,?,?)");
+                     pps.setString(1, txt_placa.getText());
+                     pps.setString(2, selectedVehiculo);
+                     pps.setString(3, txt_fecha_entrada.getText());
+                     pps.setString(4, currentHours);
+                     pps.setString(5, StatedTrue);
+                     pps.executeUpdate();
+                     pps.close();
+                     JOptionPane.showMessageDialog(null, "Datos Almacenados");
+                     limpiar();
+                     bloquear();
+                } catch (SQLException ex) {
+                    Logger.getLogger(Rate.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
-        }
+           
+       }else{
+          JOptionPane.showMessageDialog(null, "Debe agregar Placa");
+          txt_placa.grabFocus();
+       }
+       
+   
     }//GEN-LAST:event_btn_ingresoActionPerformed
 
     /**
