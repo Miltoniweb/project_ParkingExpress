@@ -504,6 +504,11 @@ public class Registry extends javax.swing.JFrame {
         btn_pendiente.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btn_pendiente.setPreferredSize(new java.awt.Dimension(189, 50));
         btn_pendiente.setRequestFocusEnabled(false);
+        btn_pendiente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_pendienteActionPerformed(evt);
+            }
+        });
 
         btn_liquidacion.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         btn_liquidacion.setForeground(new java.awt.Color(49, 56, 62));
@@ -866,6 +871,13 @@ public class Registry extends javax.swing.JFrame {
        
    
     }//GEN-LAST:event_btn_ingresoActionPerformed
+
+    private void btn_pendienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_pendienteActionPerformed
+        Pending pending = new Pending();
+        pending.setVisible(true);
+        bloquear();
+        limpiar();
+    }//GEN-LAST:event_btn_pendienteActionPerformed
 
     /**
      * @param args the command line arguments
