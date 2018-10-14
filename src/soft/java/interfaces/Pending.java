@@ -9,6 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -101,7 +102,7 @@ public class Pending extends javax.swing.JFrame {
     void limpiar(){
         txt_fecha_Salida.setText("");
         txt_hora_salida.setText("");
-        txt_buscar.setText("");
+        txt_id.setText("");
     }
     
     // Metodo para obtener la fecha del sistema
@@ -125,7 +126,7 @@ public class Pending extends javax.swing.JFrame {
             Date date = cal.getTime();
             currentHours = dateFormat.format(date);
     }
-    
+       
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -139,7 +140,7 @@ public class Pending extends javax.swing.JFrame {
         table_pending = new javax.swing.JTable();
         btn_dar_salida = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
-        txt_buscar = new javax.swing.JTextField();
+        txt_id = new javax.swing.JTextField();
         btn_generate_salida = new javax.swing.JButton();
         txt_fecha_Salida = new javax.swing.JTextField();
         txt_hora_salida = new javax.swing.JTextField();
@@ -257,11 +258,11 @@ public class Pending extends javax.swing.JFrame {
         jLabel6.setForeground(new java.awt.Color(49, 56, 62));
         jLabel6.setText("Fecha salida");
 
-        txt_buscar.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
-        txt_buscar.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txt_buscar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        txt_buscar.setEnabled(false);
-        txt_buscar.setFocusable(false);
+        txt_id.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
+        txt_id.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txt_id.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        txt_id.setEnabled(false);
+        txt_id.setFocusable(false);
 
         btn_generate_salida.setBackground(new java.awt.Color(255, 255, 255));
         btn_generate_salida.setFont(new java.awt.Font("Roboto", 0, 16)); // NOI18N
@@ -406,7 +407,7 @@ public class Pending extends javax.swing.JFrame {
                     .addComponent(txt_fecha_Salida, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txt_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_id, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -438,7 +439,7 @@ public class Pending extends javax.swing.JFrame {
                                 .addComponent(jLabel7)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(txt_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txt_id, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txt_fecha_Salida, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addComponent(btn_generate_salida, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addComponent(jPanel8, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
@@ -481,7 +482,7 @@ public class Pending extends javax.swing.JFrame {
          // Boton Modificar
         int fila = table_pending.getSelectedRow();
         if(fila>=0){
-            txt_buscar.setText(table_pending.getValueAt(fila, 0).toString());     
+            txt_id.setText(table_pending.getValueAt(fila, 0).toString());     
             getFecha();
             getHours();
             desbloquear();
@@ -497,7 +498,7 @@ public class Pending extends javax.swing.JFrame {
     private void btn_addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_addActionPerformed
         // Boton Agregar
         try {                                                                   
-            PreparedStatement pps = con.prepareStatement("UPDATE vehiculo SET fecha_salida='"+txt_fecha_Salida.getText()+"',hora_salida='"+currentHours+"' WHERE id_vehiculo ='"+txt_buscar.getText()+"'");
+            PreparedStatement pps = con.prepareStatement("UPDATE vehiculo SET fecha_salida='"+txt_fecha_Salida.getText()+"',hora_salida='"+currentHours+"' WHERE id_vehiculo ='"+txt_id.getText()+"'");
             pps.executeUpdate();
             pps.close();
             JOptionPane.showMessageDialog(null, "Datos Actualizados");
@@ -523,7 +524,7 @@ public class Pending extends javax.swing.JFrame {
         limpiar();
         int fila = table_pending.getSelectedRow();
         if(fila>=0){
-            txt_buscar.setText(table_pending.getValueAt(fila, 0).toString());
+            txt_id.setText(table_pending.getValueAt(fila, 0).toString());
             txt_fecha_Salida.setText(table_pending.getValueAt(fila, 5).toString());
             txt_hora_salida.setText(table_pending.getValueAt(fila, 6).toString());
 
@@ -541,7 +542,7 @@ public class Pending extends javax.swing.JFrame {
     private void btn_updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_updateActionPerformed
         // Boton Actualizar
         try {                                                                   
-            PreparedStatement pps = con.prepareStatement("UPDATE vehiculo SET fecha_salida='"+txt_fecha_Salida.getText()+"',hora_salida='"+txt_hora_salida.getText()+"',estado='"+StatedTrue+"' WHERE id_vehiculo ='"+txt_buscar.getText()+"'");
+            PreparedStatement pps = con.prepareStatement("UPDATE vehiculo SET fecha_salida='"+txt_fecha_Salida.getText()+"',hora_salida='"+txt_hora_salida.getText()+"',estado='"+StatedTrue+"' WHERE id_vehiculo ='"+txt_id.getText()+"'");
             pps.executeUpdate();
             pps.close();
             JOptionPane.showMessageDialog(null, "Datos Actualizados");
@@ -558,30 +559,70 @@ public class Pending extends javax.swing.JFrame {
 
     private void btn_dar_salidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_dar_salidaActionPerformed
        // Boton dar salida
-       
+        Registry registry = new Registry();
+        Home home = new Home();
+        
+        DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
+        
+        int fila = table_pending.getSelectedRow();
         int dialog = JOptionPane.YES_NO_OPTION;
+        int idSelected = Integer.parseInt(txt_id.getText());
+        Double paidValue;
         String emptyId = "";
 
-        if (!txt_buscar.getText().equals(emptyId)){
-            byte idSelected = Byte.parseByte(txt_buscar.getText());
-                
+        if (!txt_id.getText().equals(emptyId)){  
             if (idSelected >= 0){
                 int result = JOptionPane.showConfirmDialog(null, "¿Desea cálcular la salida del vehículo?", "Cierre" ,dialog);  
                     if (result == 0){
-                        // "',estado='"+statedFalse+
                         // Aqui va codigo de calculo de tarifa 
                         try {
+                            // Enviar datos a la interfaz Registro 
+                            Registry.txt_placa.setText(table_pending.getValueAt(fila, 1).toString());
+                            Registry.txt_fecha_entrada.setText(table_pending.getValueAt(fila, 3).toString());
+                            Registry.txt_hora_entrada.setText(table_pending.getValueAt(fila, 4).toString());
+                            Registry.txt_fecha_salida.setText(table_pending.getValueAt(fila, 5).toString());
+                            Registry.txt_hora_salida.setText(table_pending.getValueAt(fila, 6).toString());
                             PreparedStatement pps;
-                            pps = con.prepareStatement("UPDATE vehiculo SET estado='"+statedFalse+"' WHERE id_vehiculo ='"+txt_buscar.getText()+"'");
+                            
+                            // Consulta en la BD
+                            Statement stat = con.createStatement();
+                            ResultSet rs = stat.executeQuery("SELECT hora_entrada, hora_salida FROM vehiculo WHERE id_vehiculo = '"+idSelected+"' AND estado = 'Disponible'");
+                            rs.first();
+                            // Selecciona los atributos deacuerdo a la posicion
+                            String inputHour = rs.getString(1);
+                            String outputHour = rs.getString(2);
+                            // Convierte los registro de hora de String a Date.
+                            Date inputhour = dateFormat.parse(inputHour);
+                            Date outputhour = dateFormat.parse(outputHour);
+                            
+                            int payHours = (int) (outputhour.getTime() - inputhour.getTime()) / 60000;
+                            System.out.println(payHours);
+                            System.out.println(outputhour.getTime());
+                            System.out.println(inputhour.getTime());
+                            
+                            
+                            pps = con.prepareStatement("UPDATE vehiculo SET estado='"+statedFalse+"' WHERE id_vehiculo ='"+txt_id.getText()+"'");                                                                         
                             pps.executeUpdate();
                             pps.close();
-                            limpiar();
-                            bloquear();
-                            btn_generate_salida.setEnabled(true);
-                            ShowTable();
+                            
+                            
+                            Registry.btn_liquidacion.setEnabled(true);
+                            Registry.txt_efectivo.setEditable(true);
+                            
+                            home.dispose();
+                           // registry.setVisible(true);
+                           // this.dispose();
+                          
+                           // limpiar();
+                           // bloquear();
+                           // btn_generate_salida.setEnabled(true);
+                           // ShowTable();
                         } catch (SQLException ex) {
                             Logger.getLogger(Pending.class.getName()).log(Level.SEVERE, null, ex);
-                        }
+                        } catch (ParseException ex) {
+                        Logger.getLogger(Pending.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                        
                     }
             }
             
@@ -642,8 +683,8 @@ public class Pending extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel8;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable table_pending;
-    private javax.swing.JTextField txt_buscar;
     private javax.swing.JTextField txt_fecha_Salida;
     private javax.swing.JTextField txt_hora_salida;
+    private javax.swing.JTextField txt_id;
     // End of variables declaration//GEN-END:variables
 }

@@ -78,7 +78,7 @@ public class Registry extends javax.swing.JFrame {
             btn_ingreso.setEnabled(false);
             btn_cancelar.setEnabled(true);
             btn_pendiente.setEnabled(true);
-            btn_liquidacion.setEnabled(true);   
+            btn_liquidacion.setEnabled(false);   
     }
     
     // Metodo para bloquear campos de texto y botones
@@ -518,6 +518,11 @@ public class Registry extends javax.swing.JFrame {
         btn_liquidacion.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btn_liquidacion.setPreferredSize(new java.awt.Dimension(189, 50));
         btn_liquidacion.setRequestFocusEnabled(false);
+        btn_liquidacion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_liquidacionActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
@@ -662,6 +667,7 @@ public class Registry extends javax.swing.JFrame {
         );
 
         txt_pago.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
+        txt_pago.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         txt_pago.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txt_pagoActionPerformed(evt);
@@ -677,6 +683,7 @@ public class Registry extends javax.swing.JFrame {
         jLabel12.setText("Efectivo");
 
         txt_efectivo.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
+        txt_efectivo.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         txt_efectivo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txt_efectivoActionPerformed(evt);
@@ -692,7 +699,8 @@ public class Registry extends javax.swing.JFrame {
         jLabel13.setForeground(new java.awt.Color(49, 56, 62));
         jLabel13.setText("Cambio");
 
-        txt_cambio.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
+        txt_cambio.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
+        txt_cambio.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         txt_cambio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txt_cambioActionPerformed(evt);
@@ -881,7 +889,12 @@ public class Registry extends javax.swing.JFrame {
         pending.setVisible(true);
         bloquear();
         limpiar();
+        this.dispose();
     }//GEN-LAST:event_btn_pendienteActionPerformed
+
+    private void btn_liquidacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_liquidacionActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_liquidacionActionPerformed
 
     /**
      * @param args the command line arguments
@@ -921,7 +934,7 @@ public class Registry extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_cancelar;
     private javax.swing.JButton btn_ingreso;
-    private javax.swing.JButton btn_liquidacion;
+    public static javax.swing.JButton btn_liquidacion;
     private javax.swing.JButton btn_nuevo_ingreso;
     private javax.swing.JButton btn_pendiente;
     private javax.swing.JLabel jLabel1;
@@ -952,13 +965,13 @@ public class Registry extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> jcb_vehiculo;
     private rojeru_san.componentes.RSCalendar rs_calendar;
     private javax.swing.JTextField txt_cambio;
-    private javax.swing.JTextField txt_efectivo;
-    private javax.swing.JTextField txt_fecha_entrada;
-    private javax.swing.JTextField txt_fecha_salida;
-    private javax.swing.JTextField txt_hora_entrada;
-    private javax.swing.JTextField txt_hora_salida;
+    public static javax.swing.JTextField txt_efectivo;
+    public static javax.swing.JTextField txt_fecha_entrada;
+    public static javax.swing.JTextField txt_fecha_salida;
+    public static javax.swing.JTextField txt_hora_entrada;
+    public static javax.swing.JTextField txt_hora_salida;
     private javax.swing.JTextField txt_pago;
-    private javax.swing.JTextField txt_placa;
+    public static javax.swing.JTextField txt_placa;
     private javax.swing.JTextField txt_tiempo;
     // End of variables declaration//GEN-END:variables
 }
