@@ -838,22 +838,26 @@ public class Registry extends javax.swing.JFrame {
 
     private void btn_ingresoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ingresoActionPerformed
        // Boton Dar ingreso
+       int selectedVehiculoId = jcb_vehiculo.getSelectedIndex();
        String selectedVehiculo = jcb_vehiculo.getSelectedItem().toString(); 
        String StatedTrue = "Disponible";
        String emptyPlaca = "";
     
+       
+       
        if (!txt_placa.getText().equals(emptyPlaca)){
            
             if (selectedVehiculo.equals("Seleccione vehículo")) {
                 JOptionPane.showMessageDialog(null, "Seleccione un tipo de vehículo");
             }else{ 
                 try {
-                     PreparedStatement pps = con.prepareStatement("INSERT INTO vehiculo (placa, tipo_vehiculo, fecha_entrada, hora_entrada, estado) VALUES (?,?,?,?,?)");
+                     PreparedStatement pps = con.prepareStatement("INSERT INTO vehiculo (placa, tipo_vehiculo, fecha_entrada, hora_entrada, estado, id_tarifa1) VALUES (?,?,?,?,?,?)");
                      pps.setString(1, txt_placa.getText());
                      pps.setString(2, selectedVehiculo);
                      pps.setString(3, txt_fecha_entrada.getText());
                      pps.setString(4, currentHours);
                      pps.setString(5, StatedTrue);
+                     pps.setInt(6, selectedVehiculoId);
                      pps.executeUpdate();
                      pps.close();
                      JOptionPane.showMessageDialog(null, "Datos Almacenados");
