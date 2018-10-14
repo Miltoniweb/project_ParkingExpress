@@ -53,7 +53,7 @@ public class Pending extends javax.swing.JFrame {
             modelo.addColumn("Valor");
             modelo.addColumn("Estado");
                 table_pending.setModel(modelo);
-            String sql = "SELECT id_vehiculo ,placa, tipo_vehiculo, fecha_entrada, hora_entrada, fecha_salida, hora_salida, tipo_tarifa, valor, estado FROM vehiculo INNER JOIN tarifa ON vehiculo.id_tarifa1 = tarifa.id_tarifa;";
+            String sql = "SELECT id_vehiculo ,placa, tipo_vehiculo, fecha_entrada, hora_entrada, fecha_salida, hora_salida, tipo_tarifa, valor, estado FROM vehiculo INNER JOIN tarifa ON vehiculo.id_tarifa1 = tarifa.id_tarifa WHERE estado = 'Disponible' ORDER BY id_vehiculo ASC;";
             String datos[] = new String[10];
             Statement st;
         try {
@@ -78,8 +78,6 @@ public class Pending extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(Rate.class.getName()).log(Level.SEVERE, null, ex);
         }
-           
-  
     }
     
     void bloquear(){
@@ -249,6 +247,11 @@ public class Pending extends javax.swing.JFrame {
         btn_dar_salida.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btn_dar_salida.setFocusPainted(false);
         btn_dar_salida.setPreferredSize(new java.awt.Dimension(189, 50));
+        btn_dar_salida.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_dar_salidaActionPerformed(evt);
+            }
+        });
 
         jLabel6.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(49, 56, 62));
@@ -483,6 +486,7 @@ public class Pending extends javax.swing.JFrame {
             getHours();
             desbloquear();
             btn_generate_salida.setEnabled(false);
+            btn_dar_salida.setEnabled(false);
             btn_update.setEnabled(false);
         }else{
             JOptionPane.showMessageDialog(null, "Fila no seleccionada");
@@ -493,14 +497,16 @@ public class Pending extends javax.swing.JFrame {
     private void btn_addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_addActionPerformed
         // Boton Agregar
         try {                                                                   
-            PreparedStatement pps = con.prepareStatement("UPDATE vehiculo SET fecha_salida='"+txt_fecha_Salida.getText()+"',hora_salida='"+currentHours+"',estado='"+statedFalse+"' WHERE id_vehiculo ='"+txt_buscar.getText()+"'");
+            PreparedStatement pps = con.prepareStatement("UPDATE vehiculo SET fecha_salida='"+txt_fecha_Salida.getText()+"',hora_salida='"+currentHours+"' WHERE id_vehiculo ='"+txt_buscar.getText()+"'");
             pps.executeUpdate();
             pps.close();
             JOptionPane.showMessageDialog(null, "Datos Actualizados");
             bloquear();
-            btn_generate_salida.setEnabled(true);
-            limpiar();
             ShowTable();
+            btn_generate_salida.setEnabled(true);
+            btn_dar_salida.setEnabled(true);
+            txt_fecha_Salida.setText("");
+            txt_hora_salida.setText("");
         } catch (SQLException ex) {
             Logger.getLogger(Rate.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -524,8 +530,9 @@ public class Pending extends javax.swing.JFrame {
             bloquear();
             txt_fecha_Salida.setEditable(true);
             txt_hora_salida.setEditable(true);
-            btn_modified.setEnabled(true);
+            btn_modified.setEnabled(false);
             btn_update.setEnabled(true);
+            btn_disable.setEnabled(true);
         }else{
             JOptionPane.showMessageDialog(null, "Fila no seleccionada");
         }
@@ -548,6 +555,41 @@ public class Pending extends javax.swing.JFrame {
             Logger.getLogger(Rate.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btn_updateActionPerformed
+
+    private void btn_dar_salidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_dar_salidaActionPerformed
+       // Boton dar salida
+       
+        int dialog = JOptionPane.YES_NO_OPTION;
+        String emptyId = "";
+
+        if (!txt_buscar.getText().equals(emptyId)){
+            byte idSelected = Byte.parseByte(txt_buscar.getText());
+                
+            if (idSelected >= 0){
+                int result = JOptionPane.showConfirmDialog(null, "¿Desea cálcular la salida del vehículo?", "Cierre" ,dialog);  
+                    if (result == 0){
+                        // "',estado='"+statedFalse+
+                        // Aqui va codigo de calculo de tarifa 
+                        try {
+                            PreparedStatement pps;
+                            pps = con.prepareStatement("UPDATE vehiculo SET estado='"+statedFalse+"' WHERE id_vehiculo ='"+txt_buscar.getText()+"'");
+                            pps.executeUpdate();
+                            pps.close();
+                            limpiar();
+                            bloquear();
+                            btn_generate_salida.setEnabled(true);
+                            ShowTable();
+                        } catch (SQLException ex) {
+                            Logger.getLogger(Pending.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+            }
+            
+        }else{
+           JOptionPane.showMessageDialog(null, "Ningun vehículo ha sido seleccionado"); 
+        }
+
+    }//GEN-LAST:event_btn_dar_salidaActionPerformed
 
 
     public static void main(String args[]) {
