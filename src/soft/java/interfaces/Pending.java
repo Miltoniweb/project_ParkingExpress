@@ -108,7 +108,7 @@ public class Pending extends javax.swing.JFrame {
     // Metodo para obtener la fecha del sistema
     void getFecha(){
        Date currentDate = new Date();
-        String dateFormat = "yyyy-MM-dd";
+        String dateFormat = "dd-MM-yyyy";
         SimpleDateFormat format = new SimpleDateFormat(dateFormat);
             txt_fecha_Salida.setText(String.format(format.format(currentDate), format));
     }
@@ -126,7 +126,7 @@ public class Pending extends javax.swing.JFrame {
             Date date = cal.getTime();
             currentHours = dateFormat.format(date);
     }
-       
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -487,7 +487,8 @@ public class Pending extends javax.swing.JFrame {
             getHours();
             desbloquear();
             btn_generate_salida.setEnabled(false);
-            btn_dar_salida.setEnabled(false);
+            // btn_dar_salida.setEnabled(false);
+         btn_dar_salida.setEnabled(true);
             btn_update.setEnabled(false);
         }else{
             JOptionPane.showMessageDialog(null, "Fila no seleccionada");
@@ -569,7 +570,15 @@ public class Pending extends javax.swing.JFrame {
         int idSelected = Integer.parseInt(txt_id.getText());
         Double paidValue;
         String emptyId = "";
-
+        String tiempoTranscurrido = "";
+        
+        int aniosTranscurrido = 0;
+        int mesesTranscurrido = 0;
+        int diasTranscurrido = 0;
+        int horasTranscurrido = 0;
+        int minutosTranscurrido = 0;
+        int segundosTranscurrido = 0;
+        
         if (!txt_id.getText().equals(emptyId)){  
             if (idSelected >= 0){
                 int result = JOptionPane.showConfirmDialog(null, "¿Desea cálcular la salida del vehículo?", "Cierre" ,dialog);  
@@ -582,36 +591,95 @@ public class Pending extends javax.swing.JFrame {
                             Registry.txt_hora_entrada.setText(table_pending.getValueAt(fila, 4).toString());
                             Registry.txt_fecha_salida.setText(table_pending.getValueAt(fila, 5).toString());
                             Registry.txt_hora_salida.setText(table_pending.getValueAt(fila, 6).toString());
+                            
                             PreparedStatement pps;
                             
                             // Consulta en la BD
                             Statement stat = con.createStatement();
-                            ResultSet rs = stat.executeQuery("SELECT hora_entrada, hora_salida FROM vehiculo WHERE id_vehiculo = '"+idSelected+"' AND estado = 'Disponible'");
+                            ResultSet rs = stat.executeQuery("SELECT fecha_entrada, fecha_salida, hora_entrada, hora_salida FROM vehiculo WHERE id_vehiculo = '"+idSelected+"' AND estado = 'Disponible'");
                             rs.first();
-                            // Selecciona los atributos deacuerdo a la posicion
-                            String inputHour = rs.getString(1);
-                            String outputHour = rs.getString(2);
+                            // Selecciona los atributos deacuerdo a la posicion de la consulta sql
+                            String fecha_entrada = rs.getString(1);
+                            String fecha_salida = rs.getString(2);
+                            String hora_entrada = rs.getString(3);
+                            String hora_salida = rs.getString(4);
+                            // Convierte los registro de fecha de String a un Array.
+                            String[] entradaFecha = fecha_entrada.split("-");
+                                int diaEntrada = Integer.parseInt(entradaFecha[0]);
+                                int mesEntrada = Integer.parseInt(entradaFecha[1]);
+                                int anioEntrada = Integer.parseInt(entradaFecha[2]);
+                                
+                            String[] salidaFecha = fecha_salida.split("-");
+                                int diaSalida = Integer.parseInt(salidaFecha[0]);
+                                int mesSalida = Integer.parseInt(salidaFecha[1]);
+                                int anioSalida = Integer.parseInt(salidaFecha[2]);
+                                
+                            String[] entradaHora = hora_entrada.split(":");
+                                int horaEntrada = Integer.parseInt(entradaHora[0]);
+                                int minutoEntrada = Integer.parseInt(entradaHora[1]);
+                                int segundoEntrada = Integer.parseInt(entradaHora[2]);
+                                
+                            String[] salidaHora = hora_salida.split(":");
+                                int horaSalida = Integer.parseInt(salidaHora[0]);
+                                int minutoSalida = Integer.parseInt(salidaHora[1]);
+                                int segundoSalida = Integer.parseInt(salidaHora[2]);
+                            
+                            /*    
+                            System.out.println("La fecha del Vehiculo: "+anioEntrada+"/"+mesEntrada+"/"+diaEntrada
+                            +" Salida: "+anioSalida+"/"+mesSalida+"/"+diaSalida+" Hora: "+horaEntrada+":"+minutoEntrada
+                            +":"+segundoEntrada+" Salida: "+horaSalida+":"+minutoSalida+":"+segundoSalida);
+                            */
+                            
+                            aniosTranscurrido = anioEntrada - anioSalida;
+                            mesesTranscurrido = mesEntrada - mesSalida;
+                            diasTranscurrido = diaEntrada - diaSalida;
+                            horasTranscurrido = horaEntrada - horaSalida;
+                            minutosTranscurrido = minutoEntrada - minutoSalida;
+                            segundosTranscurrido = segundoEntrada - segundoSalida;
+                            
+                            if( (mesesTranscurrido == 0) && diasTranscurrido == 0){
+                                tiempoTranscurrido = Math.abs(horasTranscurrido)+" hora(s) "+Math.abs(minutosTranscurrido)+" minuto(s)";
+                                Registry.txt_tiempo.setText(tiempoTranscurrido);
+                            }else if (Math.abs(diasTranscurrido) > 0){
+                                tiempoTranscurrido = Math.abs(diasTranscurrido)+" dia(s) "+Math.abs(horasTranscurrido)+" hora(s) "+Math.abs(minutosTranscurrido)+" minuto(s)";
+                                Registry.txt_tiempo.setText(tiempoTranscurrido);
+                            }else {
+                                tiempoTranscurrido = Math.abs(mesesTranscurrido)+" mes(es) "+Math.abs(diasTranscurrido)+" dia(s) "+Math.abs(horasTranscurrido)+" hora(s) "+Math.abs(minutosTranscurrido)+" minuto(s)";
+                                Registry.txt_tiempo.setText(tiempoTranscurrido);
+                            }
+                            
+                            /*
+                            System.out.println("Tiempo transcurrido: "+aniosTranscurrido+"años "+mesesTranscurrido
+                            +"mes "+Math.abs(diasTranscurrido)+"dias "+horasTranscurrido+"horas "+minutosTranscurrido
+                            +"minutos "+segundosTranscurrido+"segundos.");
+                            */
+                            
+                            /*
                             // Convierte los registro de hora de String a Date.
+                            System.out.println(inputHour);
+                            System.out.println(outputHour);
+                            
                             Date inputhour = dateFormat.parse(inputHour);
                             Date outputhour = dateFormat.parse(outputHour);
                             
-                            int payHours = (int) (outputhour.getTime() - inputhour.getTime()) / 60000;
+                            int payHours = (int) (inputhour.getTime() - outputhour.getTime()) / 24;
+                            
                             System.out.println(payHours);
                             System.out.println(outputhour.getTime());
                             System.out.println(inputhour.getTime());
+                            */
                             
-                            
-                            pps = con.prepareStatement("UPDATE vehiculo SET estado='"+statedFalse+"' WHERE id_vehiculo ='"+txt_id.getText()+"'");                                                                         
-                            pps.executeUpdate();
-                            pps.close();
+                           pps = con.prepareStatement("UPDATE vehiculo SET estado='"+statedFalse+"' WHERE id_vehiculo ='"+txt_id.getText()+"'");                                                                         
+                           pps.executeUpdate();
+                           pps.close();
                             
                             
                             Registry.btn_liquidacion.setEnabled(true);
                             Registry.txt_efectivo.setEditable(true);
                             
                             home.dispose();
-                           // registry.setVisible(true);
-                           // this.dispose();
+                            registry.setVisible(true);
+                           this.dispose();
                           
                            // limpiar();
                            // bloquear();
@@ -619,10 +687,10 @@ public class Pending extends javax.swing.JFrame {
                            // ShowTable();
                         } catch (SQLException ex) {
                             Logger.getLogger(Pending.class.getName()).log(Level.SEVERE, null, ex);
-                        } catch (ParseException ex) {
+                        }/* catch (ParseException ex) {
                         Logger.getLogger(Pending.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                        
+                     */   
                     }
             }
             

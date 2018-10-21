@@ -120,7 +120,7 @@ public class Registry extends javax.swing.JFrame {
     // Metodo para obtener la fecha del sistema
     void getFecha(){
        Date currentDate = new Date();
-        String dateFormat = "yyyy-MM-dd";
+        String dateFormat = "dd-MM-yyyy";
         SimpleDateFormat format = new SimpleDateFormat(dateFormat);
             txt_fecha_entrada.setText(String.format(format.format(currentDate), format));
     }
@@ -609,6 +609,7 @@ public class Registry extends javax.swing.JFrame {
         jLabel10.setText("Tiempo transcurrido");
 
         txt_tiempo.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
+        txt_tiempo.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txt_tiempo.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         txt_tiempo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -633,11 +634,15 @@ public class Registry extends javax.swing.JFrame {
                     .addComponent(txt_fecha_salida)
                     .addComponent(txt_hora_entrada)
                     .addComponent(txt_fecha_entrada, javax.swing.GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE))
-                .addGap(183, 183, 183)
-                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(txt_tiempo))
-                .addGap(188, 188, 188))
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addGap(160, 160, 160)
+                        .addComponent(txt_tiempo, javax.swing.GroupLayout.PREFERRED_SIZE, 352, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(40, 40, 40))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel10)
+                        .addGap(127, 127, 127))))
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -972,6 +977,6 @@ public class Registry extends javax.swing.JFrame {
     public static javax.swing.JTextField txt_hora_salida;
     private javax.swing.JTextField txt_pago;
     public static javax.swing.JTextField txt_placa;
-    private javax.swing.JTextField txt_tiempo;
+    public static javax.swing.JTextField txt_tiempo;
     // End of variables declaration//GEN-END:variables
 }
