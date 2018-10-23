@@ -143,7 +143,7 @@ public class Registry extends javax.swing.JFrame {
     void getVehiculo(){
         
         try {
-            String sql = "SELECT type_vehiculo FROM tarifa";
+            String sql = "SELECT DISTINCT type_vehiculo FROM tarifa";
             PreparedStatement pps = con.prepareStatement(sql);
             ResultSet rs = pps.executeQuery(sql);
                 jcb_vehiculo.addItem("Seleccione vehículo");
@@ -155,11 +155,13 @@ public class Registry extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "No hay resultado");
         } 
     }
-    
+   
+     
     void getTarifa(){
-                
+        String selectedVehiculo = jcb_vehiculo.getSelectedItem().toString();
+        System.out.println(selectedVehiculo);
         try {
-            String sql = "SELECT tipo_tarifa FROM tarifa";
+            String sql = "SELECT tipo_tarifa, valor FROM tarifa WHERE type_vehiculo = '"+selectedVehiculo+"'";
             PreparedStatement pps = con.prepareStatement(sql);
             ResultSet rs = pps.executeQuery(sql);
                 jcb_tarifa.addItem("Seleccione tarifa");   
@@ -171,7 +173,7 @@ public class Registry extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "No hay resultado");
         }         
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -180,6 +182,7 @@ public class Registry extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
+        jLabel21 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel19 = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
@@ -269,12 +272,22 @@ public class Registry extends javax.swing.JFrame {
             }
         });
 
+        jLabel21.setIcon(new javax.swing.ImageIcon(getClass().getResource("/soft/java/files/Minus Math _30px.png"))); // NOI18N
+        jLabel21.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel21.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel21MouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap(938, Short.MAX_VALUE)
+                .addContainerGap(890, Short.MAX_VALUE)
+                .addComponent(jLabel21)
+                .addGap(18, 18, 18)
                 .addComponent(jLabel5)
                 .addGap(26, 26, 26))
         );
@@ -282,8 +295,10 @@ public class Registry extends javax.swing.JFrame {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(19, 19, 19)
-                .addComponent(jLabel5)
-                .addContainerGap(23, Short.MAX_VALUE))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 0, 980, 70));
@@ -856,14 +871,14 @@ public class Registry extends javax.swing.JFrame {
        String StatedTrue = "Disponible";
        String emptyPlaca = "";
     
-       
-       
+      
        if (!txt_placa.getText().equals(emptyPlaca)){
            
             if (selectedVehiculo.equals("Seleccione vehículo")) {
                 JOptionPane.showMessageDialog(null, "Seleccione un tipo de vehículo");
             }else{ 
                 try {
+                     
                      PreparedStatement pps = con.prepareStatement("INSERT INTO vehiculo (placa, tipo_vehiculo, fecha_entrada, hora_entrada, estado, id_tarifa1) VALUES (?,?,?,?,?,?)");
                      pps.setString(1, txt_placa.getText());
                      pps.setString(2, selectedVehiculo);
@@ -900,6 +915,10 @@ public class Registry extends javax.swing.JFrame {
     private void btn_liquidacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_liquidacionActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btn_liquidacionActionPerformed
+
+    private void jLabel21MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel21MouseClicked
+        this.setExtendedState(ICONIFIED);
+    }//GEN-LAST:event_jLabel21MouseClicked
 
     /**
      * @param args the command line arguments
@@ -950,6 +969,7 @@ public class Registry extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
