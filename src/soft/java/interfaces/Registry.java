@@ -38,7 +38,6 @@ public class Registry extends javax.swing.JFrame {
         Timer time = new Timer(1000, new Registry.currentHour());
         time.start();
         getVehiculo();
-        getTarifa();
         bloquear();
     }
     
@@ -61,7 +60,6 @@ public class Registry extends javax.swing.JFrame {
     void desbloquear(){
         txt_placa.setEditable(true);
         jcb_vehiculo.setEditable(true);
-        jcb_tarifa.setEditable(true);
         txt_fecha_entrada.setEditable(false);
         txt_hora_entrada.setEditable(false);        
         txt_fecha_salida.setEditable(false);        
@@ -72,9 +70,7 @@ public class Registry extends javax.swing.JFrame {
         txt_tiempo.setEditable(false);
             btn_nuevo_ingreso.setEnabled(false);
             jcb_vehiculo.setEnabled(true);
-            jcb_tarifa.setEnabled(true);
             jcb_vehiculo.setEditable(false);
-            jcb_tarifa.setEditable(false);
             btn_ingreso.setEnabled(false);
             btn_cancelar.setEnabled(true);
             btn_pendiente.setEnabled(true);
@@ -85,7 +81,7 @@ public class Registry extends javax.swing.JFrame {
     void bloquear(){
         txt_placa.setEditable(false);
         jcb_vehiculo.setEditable(false);
-        jcb_tarifa.setEditable(false);
+        txt_tarifa.setEditable(false);
         txt_fecha_entrada.setEditable(false);
         txt_hora_entrada.setEditable(false);        
         txt_fecha_salida.setEditable(false);        
@@ -96,7 +92,6 @@ public class Registry extends javax.swing.JFrame {
         txt_tiempo.setEditable(false);
             btn_nuevo_ingreso.setEnabled(true);
             jcb_vehiculo.setEnabled(false);
-            jcb_tarifa.setEnabled(false);
             btn_ingreso.setEnabled(false);
             btn_cancelar.setEnabled(false);
             btn_pendiente.setEnabled(false);
@@ -120,7 +115,7 @@ public class Registry extends javax.swing.JFrame {
     // Metodo para obtener la fecha del sistema
     void getFecha(){
        Date currentDate = new Date();
-        String dateFormat = "dd-MM-yyyy";
+        String dateFormat = "dd-MM-yyyy HH:mm:ss";
         SimpleDateFormat format = new SimpleDateFormat(dateFormat);
             txt_fecha_entrada.setText(String.format(format.format(currentDate), format));
     }
@@ -140,8 +135,7 @@ public class Registry extends javax.swing.JFrame {
     }
     
     // Metodo para obtener datos 'tipo vehiculo' de la base datos
-    void getVehiculo(){
-        
+    void getVehiculo(){  
         try {
             String sql = "SELECT DISTINCT type_vehiculo FROM tarifa";
             PreparedStatement pps = con.prepareStatement(sql);
@@ -156,7 +150,7 @@ public class Registry extends javax.swing.JFrame {
         } 
     }
    
-     
+/*
     void getTarifa(){
         String selectedVehiculo = jcb_vehiculo.getSelectedItem().toString();
         System.out.println(selectedVehiculo);
@@ -173,7 +167,7 @@ public class Registry extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "No hay resultado");
         }         
     }
-
+*/ 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -196,8 +190,8 @@ public class Registry extends javax.swing.JFrame {
         jcb_vehiculo = new javax.swing.JComboBox<>();
         jPanel6 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
-        jcb_tarifa = new javax.swing.JComboBox<>();
         btn_ingreso = new javax.swing.JButton();
+        txt_tarifa = new javax.swing.JTextField();
         jPanel7 = new javax.swing.JPanel();
         btn_nuevo_ingreso = new javax.swing.JButton();
         btn_cancelar = new javax.swing.JButton();
@@ -440,9 +434,6 @@ public class Registry extends javax.swing.JFrame {
         jLabel4.setForeground(new java.awt.Color(49, 56, 62));
         jLabel4.setText("Tarifa");
 
-        jcb_tarifa.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
-        jcb_tarifa.setPreferredSize(new java.awt.Dimension(33, 35));
-
         btn_ingreso.setBackground(new java.awt.Color(255, 255, 255));
         btn_ingreso.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         btn_ingreso.setForeground(new java.awt.Color(112, 112, 112));
@@ -458,6 +449,12 @@ public class Registry extends javax.swing.JFrame {
             }
         });
 
+        txt_tarifa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_tarifaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
@@ -465,8 +462,8 @@ public class Registry extends javax.swing.JFrame {
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addGap(47, 47, 47)
                 .addComponent(jLabel4)
-                .addGap(18, 18, 18)
-                .addComponent(jcb_tarifa, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(txt_tarifa, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btn_ingreso, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(212, 212, 212))
@@ -474,12 +471,12 @@ public class Registry extends javax.swing.JFrame {
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
-                .addGap(7, 7, 7)
+                .addGap(9, 9, 9)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jcb_tarifa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4)
-                    .addComponent(btn_ingreso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(9, Short.MAX_VALUE))
+                    .addComponent(btn_ingreso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_tarifa, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(12, Short.MAX_VALUE))
         );
 
         jPanel7.setPreferredSize(new java.awt.Dimension(100, 70));
@@ -900,8 +897,6 @@ public class Registry extends javax.swing.JFrame {
           JOptionPane.showMessageDialog(null, "Debe agregar Placa");
           txt_placa.grabFocus();
        }
-       
-   
     }//GEN-LAST:event_btn_ingresoActionPerformed
 
     private void btn_pendienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_pendienteActionPerformed
@@ -919,6 +914,10 @@ public class Registry extends javax.swing.JFrame {
     private void jLabel21MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel21MouseClicked
         this.setExtendedState(ICONIFIED);
     }//GEN-LAST:event_jLabel21MouseClicked
+
+    private void txt_tarifaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_tarifaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_tarifaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -986,7 +985,6 @@ public class Registry extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JLabel jbl_hours;
-    private javax.swing.JComboBox<String> jcb_tarifa;
     private javax.swing.JComboBox<String> jcb_vehiculo;
     private rojeru_san.componentes.RSCalendar rs_calendar;
     private javax.swing.JTextField txt_cambio;
@@ -995,8 +993,9 @@ public class Registry extends javax.swing.JFrame {
     public static javax.swing.JTextField txt_fecha_salida;
     public static javax.swing.JTextField txt_hora_entrada;
     public static javax.swing.JTextField txt_hora_salida;
-    private javax.swing.JTextField txt_pago;
+    public static javax.swing.JTextField txt_pago;
     public static javax.swing.JTextField txt_placa;
+    private javax.swing.JTextField txt_tarifa;
     public static javax.swing.JTextField txt_tiempo;
     // End of variables declaration//GEN-END:variables
 }

@@ -22,6 +22,7 @@ import soft.java.conection.MySQLConnection;
 public class Pending extends javax.swing.JFrame {
     
     int x, y;
+    int priceToPay = 0;
     String currentHours = "";
     String statedFalse = "No disponible";
     String StatedTrue = "Disponible";
@@ -412,23 +413,23 @@ public class Pending extends javax.swing.JFrame {
                 .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addGap(17, 17, 17)
+                .addGap(14, 14, 14)
                 .addComponent(btn_generate_salida, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txt_fecha_Salida, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(9, 9, 9)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txt_id, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txt_hora_salida, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
                 .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(10, 10, 10)
                 .addComponent(btn_dar_salida, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(20, 20, 20))
         );
@@ -437,25 +438,27 @@ public class Pending extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(27, 27, 27)
+                .addGap(15, 15, 15)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel8)
-                            .addComponent(jLabel6))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txt_hora_salida, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(jPanel2Layout.createSequentialGroup()
                             .addComponent(btn_dar_salida, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel7)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(txt_id, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txt_fecha_Salida, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(btn_generate_salida, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addComponent(jPanel8, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                        .addComponent(jPanel8, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btn_generate_salida, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(5, 5, 5)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel7)
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel8)))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(23, 23, 23)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txt_hora_salida, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txt_id, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txt_fecha_Salida, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 1140, 460));
@@ -492,17 +495,47 @@ public class Pending extends javax.swing.JFrame {
     }//GEN-LAST:event_txt_hora_salidaActionPerformed
 
     private void btn_generate_salidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_generate_salidaActionPerformed
-         // Boton Modificar
+        
+        double payment = 0.0;
+        
+        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+        Calendar cal  = Calendar.getInstance();
+        Date date = cal.getTime();
+        
         int fila = table_pending.getSelectedRow();
         if(fila>=0){
-            txt_id.setText(table_pending.getValueAt(fila, 0).toString());     
-            getFecha();
-            getHours();
-            desbloquear();
-            btn_generate_salida.setEnabled(false);
-            // btn_dar_salida.setEnabled(false);
-         btn_dar_salida.setEnabled(true);
-            btn_update.setEnabled(false);
+            try {
+                txt_id.setText(table_pending.getValueAt(fila, 0).toString());
+                int idSelected = Integer.parseInt(txt_id.getText());
+                getFecha();
+                getHours();
+                // Consulta en la BD
+                Statement stat = con.createStatement();
+                ResultSet rs = stat.executeQuery("SELECT fecha_entrada, tipo_vehiculo, valor FROM vehiculo INNER JOIN tarifa ON vehiculo.id_tarifa1 = tarifa.id_tarifa WHERE id_vehiculo = "+idSelected+" AND estado = 'Disponible'");
+                rs.first();
+                // Selecciona los atributos deacuerdo a la posicion de la consulta sql
+                String fecha_entrada = rs.getString(1);
+                Date fecha_Entrada = dateFormat.parse(fecha_entrada);
+                String tipo_vehiculo = rs.getString(2);
+                String valor_tarifa = rs.getString(3);
+                // Convierte el valor traido de la BD de String a double
+                double valorTarifa = Double.parseDouble(valor_tarifa);
+                // Calcula el tiempo transcurrido entre la fecha de entrada y la fecha actual (de salida)
+                int ratePay = (int) (date.getTime() - fecha_Entrada.getTime()) / 60000;
+                // Determina el valor a pagar con base al tiempo transcurrido y calculado en hora-minuto
+                payment = (valorTarifa / 60) * ratePay;
+                // Parsea el resultado a pagar de double a Entero
+                int payMent = (int) payment;
+                priceToPay = payMent;
+                desbloquear();
+                btn_generate_salida.setEnabled(false);
+                btn_dar_salida.setEnabled(true);
+                btn_update.setEnabled(false);
+            } catch (SQLException ex) {
+                Logger.getLogger(Pending.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ParseException ex) {
+                Logger.getLogger(Pending.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }else{
             JOptionPane.showMessageDialog(null, "Fila no seleccionada");
         }
@@ -575,28 +608,24 @@ public class Pending extends javax.swing.JFrame {
        // Boton dar salida
         Registry registry = new Registry();
         Home home = new Home();
-        
-        DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
-        
+                
         int fila = table_pending.getSelectedRow();
         int dialog = JOptionPane.YES_NO_OPTION;
         int idSelected = Integer.parseInt(txt_id.getText());
-        Double paidValue;
+        
         String emptyId = "";
         String tiempoTranscurrido = "";
+        String enteroString = Integer.toString(priceToPay);
         
-        int aniosTranscurrido = 0;
         int mesesTranscurrido = 0;
         int diasTranscurrido = 0;
         int horasTranscurrido = 0;
         int minutosTranscurrido = 0;
-        int segundosTranscurrido = 0;
-        
+
         if (!txt_id.getText().equals(emptyId)){  
             if (idSelected >= 0){
                 int result = JOptionPane.showConfirmDialog(null, "¿Desea cálcular la salida del vehículo?", "Cierre" ,dialog);  
                     if (result == 0){
-                        // Aqui va codigo de calculo de tarifa 
                         try {
                             // Enviar datos a la interfaz Registro 
                             Registry.txt_placa.setText(table_pending.getValueAt(fila, 1).toString());
@@ -604,6 +633,7 @@ public class Pending extends javax.swing.JFrame {
                             Registry.txt_hora_entrada.setText(table_pending.getValueAt(fila, 4).toString());
                             Registry.txt_fecha_salida.setText(table_pending.getValueAt(fila, 5).toString());
                             Registry.txt_hora_salida.setText(table_pending.getValueAt(fila, 6).toString());
+                            Registry.txt_pago.setText("$"+enteroString);
                             
                             PreparedStatement pps;
                             
@@ -620,35 +650,23 @@ public class Pending extends javax.swing.JFrame {
                             String[] entradaFecha = fecha_entrada.split("-");
                                 int diaEntrada = Integer.parseInt(entradaFecha[0]);
                                 int mesEntrada = Integer.parseInt(entradaFecha[1]);
-                                int anioEntrada = Integer.parseInt(entradaFecha[2]);
                                 
                             String[] salidaFecha = fecha_salida.split("-");
                                 int diaSalida = Integer.parseInt(salidaFecha[0]);
                                 int mesSalida = Integer.parseInt(salidaFecha[1]);
-                                int anioSalida = Integer.parseInt(salidaFecha[2]);
                                 
                             String[] entradaHora = hora_entrada.split(":");
                                 int horaEntrada = Integer.parseInt(entradaHora[0]);
                                 int minutoEntrada = Integer.parseInt(entradaHora[1]);
-                                int segundoEntrada = Integer.parseInt(entradaHora[2]);
-                                
+
                             String[] salidaHora = hora_salida.split(":");
                                 int horaSalida = Integer.parseInt(salidaHora[0]);
                                 int minutoSalida = Integer.parseInt(salidaHora[1]);
-                                int segundoSalida = Integer.parseInt(salidaHora[2]);
-                            
-                            /*    
-                            System.out.println("La fecha del Vehiculo: "+anioEntrada+"/"+mesEntrada+"/"+diaEntrada
-                            +" Salida: "+anioSalida+"/"+mesSalida+"/"+diaSalida+" Hora: "+horaEntrada+":"+minutoEntrada
-                            +":"+segundoEntrada+" Salida: "+horaSalida+":"+minutoSalida+":"+segundoSalida);
-                            */
-                            
-                            aniosTranscurrido = anioEntrada - anioSalida;
+
                             mesesTranscurrido = mesEntrada - mesSalida;
                             diasTranscurrido = diaEntrada - diaSalida;
                             horasTranscurrido = horaEntrada - horaSalida;
                             minutosTranscurrido = minutoEntrada - minutoSalida;
-                            segundosTranscurrido = segundoEntrada - segundoSalida;
                             
                             if( (mesesTranscurrido == 0) && diasTranscurrido == 0){
                                 tiempoTranscurrido = Math.abs(horasTranscurrido)+" hora(s) "+Math.abs(minutosTranscurrido)+" minuto(s)";
@@ -661,41 +679,13 @@ public class Pending extends javax.swing.JFrame {
                                 Registry.txt_tiempo.setText(tiempoTranscurrido);
                             }
                             
-                            /*PENDIENTE
-                                - Calcular el precio a pagar de parqueo respecto a la hora y la tarifa ingresada
-                                - 
-                            */
-                            
-                            
-                            /*
-                            System.out.println("Tiempo transcurrido: "+aniosTranscurrido+"años "+mesesTranscurrido
-                            +"mes "+Math.abs(diasTranscurrido)+"dias "+horasTranscurrido+"horas "+minutosTranscurrido
-                            +"minutos "+segundosTranscurrido+"segundos.");
-                            */
-                            
-                            /*
-                            // Convierte los registro de hora de String a Date.
-                            System.out.println(inputHour);
-                            System.out.println(outputHour);
-                            
-                            Date inputhour = dateFormat.parse(inputHour);
-                            Date outputhour = dateFormat.parse(outputHour);
-                            
-                            int payHours = (int) (inputhour.getTime() - outputhour.getTime()) / 24;
-                            
-                            System.out.println(payHours);
-                            System.out.println(outputhour.getTime());
-                            System.out.println(inputhour.getTime());
-                            */
-                            
                             pps = con.prepareStatement("UPDATE vehiculo SET estado='"+statedFalse+"' WHERE id_vehiculo ='"+txt_id.getText()+"'");                                                                         
                             pps.executeUpdate();
                             pps.close();
-                            
-                            
+ 
                             Registry.btn_liquidacion.setEnabled(true);
                             Registry.txt_efectivo.setEditable(true);
-
+                            
                             home.dispose();
                             registry.setVisible(true);
                             this.dispose();
@@ -706,10 +696,7 @@ public class Pending extends javax.swing.JFrame {
                            // ShowTable();
                         } catch (SQLException ex) {
                             Logger.getLogger(Pending.class.getName()).log(Level.SEVERE, null, ex);
-                        }/* catch (ParseException ex) {
-                        Logger.getLogger(Pending.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                     */   
+                        }
                     }
             }
             
