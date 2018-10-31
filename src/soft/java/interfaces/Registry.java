@@ -683,11 +683,17 @@ public class Registry extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        txt_pago.setColumns(5);
         txt_pago.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
         txt_pago.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         txt_pago.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txt_pagoActionPerformed(evt);
+            }
+        });
+        txt_pago.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txt_pagoKeyReleased(evt);
             }
         });
 
@@ -707,6 +713,9 @@ public class Registry extends javax.swing.JFrame {
             }
         });
         txt_efectivo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txt_efectivoKeyReleased(evt);
+            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txt_efectivoKeyTyped(evt);
             }
@@ -918,6 +927,29 @@ public class Registry extends javax.swing.JFrame {
     private void txt_tarifaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_tarifaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_tarifaActionPerformed
+
+    private void txt_pagoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_pagoKeyReleased
+       
+    }//GEN-LAST:event_txt_pagoKeyReleased
+
+    private void txt_efectivoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_efectivoKeyReleased
+       
+        if (!txt_efectivo.getText().equals("")) {
+             String payValued = txt_pago.getText();
+             String payCash = txt_efectivo.getText();
+
+             Integer cashPay = Integer.parseInt(payCash);
+             Integer changePay = Integer.parseInt(payValued);
+             
+             int valor_pagado = cashPay - changePay;
+             
+             String enteroString = Integer.toString(valor_pagado);
+             txt_cambio.setText(enteroString); 
+        }else{
+         txt_cambio.setText("");
+        }     
+       
+    }//GEN-LAST:event_txt_efectivoKeyReleased
 
     /**
      * @param args the command line arguments

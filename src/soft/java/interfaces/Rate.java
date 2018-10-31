@@ -641,7 +641,6 @@ public class Rate extends javax.swing.JFrame {
 
     private void btn_enableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_enableActionPerformed
         desbloquear();
-        txt_vehiculo.grabFocus();
     }//GEN-LAST:event_btn_enableActionPerformed
 
     private void btn_disableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_disableActionPerformed

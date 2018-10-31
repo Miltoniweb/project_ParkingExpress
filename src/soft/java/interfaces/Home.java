@@ -281,6 +281,9 @@ public class Home extends javax.swing.JFrame {
             }
         });
         jPanel5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanel5MouseClicked(evt);
+            }
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 jPanel5MouseExited(evt);
             }
@@ -311,17 +314,17 @@ public class Home extends javax.swing.JFrame {
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(67, 67, 67)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                .addContainerGap(79, Short.MAX_VALUE)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addComponent(jLabel4))
-                    .addComponent(jLabel3)
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(65, 65, 65)
-                        .addComponent(jLabel9)))
-                .addContainerGap(70, Short.MAX_VALUE))
+                    .addComponent(jLabel4)
+                    .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                            .addComponent(jLabel3)
+                            .addGap(58, 58, 58))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                            .addComponent(jLabel9)
+                            .addGap(129, 129, 129)))))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -330,9 +333,9 @@ public class Home extends javax.swing.JFrame {
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel9)
-                .addGap(25, 25, 25))
+                .addGap(31, 31, 31))
         );
 
         jPanel2.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 120, -1, -1));
@@ -340,12 +343,24 @@ public class Home extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Ubuntu", 0, 24)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(49, 56, 62));
         jLabel6.setText("Area de Control");
-        jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(402, 41, -1, -1));
+        jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 50, -1, -1));
 
         jPanel6.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel6.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(112, 112, 112), 2));
         jPanel6.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jPanel6.setPreferredSize(new java.awt.Dimension(300, 150));
+        jPanel6.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                jPanel6MouseMoved(evt);
+            }
+        });
+        jPanel6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanel6MouseClicked(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jPanel6MouseExited(evt);
+            }
+        });
 
         jLabel7.setFont(new java.awt.Font("Ubuntu", 0, 24)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(49, 56, 62));
@@ -377,7 +392,7 @@ public class Home extends javax.swing.JFrame {
                 .addComponent(jLabel7)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
-                .addContainerGap(79, Short.MAX_VALUE)
+                .addContainerGap(83, Short.MAX_VALUE)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
                         .addComponent(jLabel8)
@@ -395,7 +410,7 @@ public class Home extends javax.swing.JFrame {
                 .addComponent(jLabel8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel10)
-                .addContainerGap(23, Short.MAX_VALUE))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
 
         jPanel2.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 120, -1, -1));
@@ -407,7 +422,26 @@ public class Home extends javax.swing.JFrame {
 
         jPanel9.setBackground(new java.awt.Color(255, 255, 255));
         jPanel9.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel9.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jPanel9.setPreferredSize(new java.awt.Dimension(300, 150));
+        jPanel9.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                jPanel9MouseMoved(evt);
+            }
+        });
+        jPanel9.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanel9MouseClicked(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jPanel9MouseExited(evt);
+            }
+        });
+        jPanel9.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jPanel9KeyPressed(evt);
+            }
+        });
 
         jLabel14.setFont(new java.awt.Font("Ubuntu", 0, 24)); // NOI18N
         jLabel14.setForeground(new java.awt.Color(49, 56, 62));
@@ -457,7 +491,21 @@ public class Home extends javax.swing.JFrame {
         jPanel2.add(jPanel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 410, -1, -1));
 
         jPanel10.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel10.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jPanel10.setPreferredSize(new java.awt.Dimension(300, 150));
+        jPanel10.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                jPanel10MouseMoved(evt);
+            }
+        });
+        jPanel10.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanel10MouseClicked(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jPanel10MouseExited(evt);
+            }
+        });
 
         jLabel16.setFont(new java.awt.Font("Ubuntu", 0, 24)); // NOI18N
         jLabel16.setForeground(new java.awt.Color(49, 56, 62));
@@ -520,7 +568,7 @@ public class Home extends javax.swing.JFrame {
 
         jPanel2.add(jPanel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 410, -1, -1));
 
-        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 70, 980, 630));
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 60, 980, 630));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -576,9 +624,7 @@ public class Home extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel13KeyPressed
 
     private void jLabel9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel9MouseClicked
-        Registry registry = new Registry();
-        registry.setVisible(true);
-        this.dispose();
+        
     }//GEN-LAST:event_jLabel9MouseClicked
 
     private void jLabel10MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel10MouseClicked
@@ -588,8 +634,7 @@ public class Home extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel10MouseClicked
 
     private void jLabel13MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel13MouseClicked
-        Pending pending = new Pending();
-        pending.setVisible(true);
+        
     }//GEN-LAST:event_jLabel13MouseClicked
 
     private void jPanel5MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel5MouseMoved
@@ -603,6 +648,57 @@ public class Home extends javax.swing.JFrame {
     private void jLabel21MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel21MouseClicked
         this.setExtendedState(ICONIFIED);
     }//GEN-LAST:event_jLabel21MouseClicked
+
+    private void jPanel9KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jPanel9KeyPressed
+       
+    }//GEN-LAST:event_jPanel9KeyPressed
+
+    private void jPanel9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel9MouseClicked
+        Daily daily = new Daily();
+        daily.setVisible(true);
+    }//GEN-LAST:event_jPanel9MouseClicked
+
+    private void jPanel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel5MouseClicked
+        Registry registry = new Registry();
+        registry.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jPanel5MouseClicked
+
+    private void jPanel6MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel6MouseMoved
+        jPanel6.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(122, 122, 122)));
+    }//GEN-LAST:event_jPanel6MouseMoved
+
+    private void jPanel6MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel6MouseExited
+        jPanel6.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 240, 242)));
+    }//GEN-LAST:event_jPanel6MouseExited
+
+    private void jPanel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel6MouseClicked
+        Rate rate = new Rate();
+        rate.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jPanel6MouseClicked
+
+    private void jPanel10MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel10MouseClicked
+       Pending pending = new Pending();
+       pending.setVisible(true);
+    }//GEN-LAST:event_jPanel10MouseClicked
+
+    private void jPanel10MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel10MouseExited
+        jPanel10.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 240, 242)));
+        
+    }//GEN-LAST:event_jPanel10MouseExited
+
+    private void jPanel10MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel10MouseMoved
+        jPanel10.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(122, 122, 122)));
+    }//GEN-LAST:event_jPanel10MouseMoved
+
+    private void jPanel9MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel9MouseExited
+        jPanel9.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 240, 242)));
+    }//GEN-LAST:event_jPanel9MouseExited
+
+    private void jPanel9MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel9MouseMoved
+       jPanel9.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(122, 122, 122)));
+    }//GEN-LAST:event_jPanel9MouseMoved
 
     /**
      * @param args the command line arguments
