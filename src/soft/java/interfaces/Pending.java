@@ -633,6 +633,8 @@ public class Pending extends javax.swing.JFrame {
                             Registry.txt_hora_entrada.setText(table_pending.getValueAt(fila, 4).toString());
                             Registry.txt_fecha_salida.setText(table_pending.getValueAt(fila, 5).toString());
                             Registry.txt_hora_salida.setText(table_pending.getValueAt(fila, 6).toString());
+                            Registry.txt_tipo.setText(table_pending.getValueAt(fila, 7).toString());
+                            Registry.txt_tarifa.setText(table_pending.getValueAt(fila, 8).toString());
                             Registry.txt_pago.setText(enteroString);
                             
                             PreparedStatement pps;

@@ -82,6 +82,7 @@ public class Registry extends javax.swing.JFrame {
         txt_placa.setEditable(false);
         jcb_vehiculo.setEditable(false);
         txt_tarifa.setEditable(false);
+        txt_tipo.setEditable(false);
         txt_fecha_entrada.setEditable(false);
         txt_hora_entrada.setEditable(false);        
         txt_fecha_salida.setEditable(false);        
@@ -101,6 +102,8 @@ public class Registry extends javax.swing.JFrame {
     // Metodo para limpiar campos de texto
     void limpiar(){
         txt_placa.setText("");
+        txt_tarifa.setText("");
+        txt_tipo.setText("");
         txt_fecha_entrada.setText("");
         txt_fecha_entrada.setText("");
         txt_hora_entrada.setText("");
@@ -192,6 +195,8 @@ public class Registry extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         btn_ingreso = new javax.swing.JButton();
         txt_tarifa = new javax.swing.JTextField();
+        txt_tipo = new javax.swing.JTextField();
+        jLabel14 = new javax.swing.JLabel();
         jPanel7 = new javax.swing.JPanel();
         btn_nuevo_ingreso = new javax.swing.JButton();
         btn_cancelar = new javax.swing.JButton();
@@ -449,11 +454,25 @@ public class Registry extends javax.swing.JFrame {
             }
         });
 
+        txt_tarifa.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
+        txt_tarifa.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txt_tarifa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txt_tarifaActionPerformed(evt);
             }
         });
+
+        txt_tipo.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        txt_tipo.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txt_tipo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_tipoActionPerformed(evt);
+            }
+        });
+
+        jLabel14.setFont(new java.awt.Font("Roboto", 0, 20)); // NOI18N
+        jLabel14.setForeground(new java.awt.Color(49, 56, 62));
+        jLabel14.setText("Tipo");
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -462,8 +481,12 @@ public class Registry extends javax.swing.JFrame {
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addGap(47, 47, 47)
                 .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txt_tarifa, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(txt_tarifa, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabel14)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txt_tipo, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btn_ingreso, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(212, 212, 212))
@@ -475,8 +498,10 @@ public class Registry extends javax.swing.JFrame {
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(btn_ingreso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_tarifa, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(12, Short.MAX_VALUE))
+                    .addComponent(txt_tarifa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_tipo, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel14))
+                .addContainerGap(13, Short.MAX_VALUE))
         );
 
         jPanel7.setPreferredSize(new java.awt.Dimension(100, 70));
@@ -917,7 +942,34 @@ public class Registry extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_pendienteActionPerformed
 
     private void btn_liquidacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_liquidacionActionPerformed
-        // TODO add your handling code here:
+    // Boton - Generar liquidacion
+        String emptyId = "";
+        int dialog = JOptionPane.YES_NO_OPTION;
+        int payMayor = Integer.parseInt(txt_pago.getText());
+        
+        if (!txt_efectivo.getText().equals(emptyId)){
+            int payMenor = Integer.parseInt(txt_efectivo.getText());
+            if(payMenor >= payMayor){
+                int result = JOptionPane.showConfirmDialog(null, "¿Desea generar reporte de salida del vehículo?", "Cierre" ,dialog);  
+                if (result == 0){
+                    try {        
+                        PreparedStatement pps = con.prepareStatement("UPDATE vehiculo SET valor_pagado = '"+txt_pago.getText()
+                                +"' WHERE placa = '"+txt_placa.getText()+"'");
+                        pps.executeUpdate();
+                        pps.close();
+                        JOptionPane.showMessageDialog(null, "Vihículo dado de salida.");
+                        limpiar();
+                        bloquear();
+                   } catch (SQLException ex) {
+                       Logger.getLogger(Rate.class.getName()).log(Level.SEVERE, null, ex);
+                   }
+                }
+            }else{
+                JOptionPane.showMessageDialog(null, "El pago ingresado no correspode a la cantidad a pagar, Por favor verifique.");
+            }            
+        }else{
+            JOptionPane.showMessageDialog(null, "Debe ingresar una cantidad de efectivo al pago que debe realizar"); 
+        }  
     }//GEN-LAST:event_btn_liquidacionActionPerformed
 
     private void jLabel21MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel21MouseClicked
@@ -950,6 +1002,10 @@ public class Registry extends javax.swing.JFrame {
         }     
        
     }//GEN-LAST:event_txt_efectivoKeyReleased
+
+    private void txt_tipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_tipoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_tipoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -997,6 +1053,7 @@ public class Registry extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
@@ -1027,7 +1084,8 @@ public class Registry extends javax.swing.JFrame {
     public static javax.swing.JTextField txt_hora_salida;
     public static javax.swing.JTextField txt_pago;
     public static javax.swing.JTextField txt_placa;
-    private javax.swing.JTextField txt_tarifa;
+    public static javax.swing.JTextField txt_tarifa;
     public static javax.swing.JTextField txt_tiempo;
+    public static javax.swing.JTextField txt_tipo;
     // End of variables declaration//GEN-END:variables
 }
