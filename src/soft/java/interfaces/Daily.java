@@ -44,14 +44,14 @@ public class Daily extends javax.swing.JFrame {
             modelo.addColumn("Hora salida");
             modelo.addColumn("Valor pagado");
             modelo.addColumn("Tipo tarifa");
-            modelo.addColumn("Valor");
+            modelo.addColumn("Valor tarifa");
             modelo.addColumn("Estado");
                 table_daily.setModel(modelo);         
             String sql = "";
             if(id_search.equals("")){
-                sql = "SELECT id_vehiculo, placa, tipo_vehiculo, fecha_entrada, hora_entrada, fecha_salida, hora_salida, valor_pagado, tipo_tarifa, valor_pagado, estado FROM vehiculo INNER JOIN tarifa ON vehiculo.id_tarifa1 = tarifa.id_tarifa";
+                sql = "SELECT id_vehiculo, placa, tipo_vehiculo, fecha_entrada, hora_entrada, fecha_salida, hora_salida, valor_pagado, tipo_tarifa, valor, estado FROM vehiculo INNER JOIN tarifa ON vehiculo.id_tarifa1 = tarifa.id_tarifa";
             }else{
-                sql = "SELECT id_vehiculo, placa, tipo_vehiculo, fecha_entrada, hora_entrada, fecha_salida, hora_salida, valor_pagado, tipo_tarifa, valor_pagado, estado FROM vehiculo INNER JOIN tarifa ON vehiculo.id_tarifa1 = tarifa.id_tarifa WHERE "+searchAttribute+"='"+id_search+"'";
+                sql = "SELECT id_vehiculo, placa, tipo_vehiculo, fecha_entrada, hora_entrada, fecha_salida, hora_salida, valor_pagado, tipo_tarifa, valor, estado FROM vehiculo INNER JOIN tarifa ON vehiculo.id_tarifa1 = tarifa.id_tarifa WHERE "+searchAttribute+"='"+id_search+"'";
             }
     
             String datos[] = new String[11];
