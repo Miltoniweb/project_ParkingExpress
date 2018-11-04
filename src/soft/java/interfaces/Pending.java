@@ -17,6 +17,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
 import soft.java.conection.MySQLConnection;
 
 public class Pending extends javax.swing.JFrame {
@@ -39,10 +40,13 @@ public class Pending extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         bloquear();
         ShowTable();
+        
     }
 
     // metodo para mostrar la tabla de la Base Datos 
     void ShowTable(){
+        
+        
         DefaultTableModel modelo = new DefaultTableModel();   
             modelo.addColumn("ID Vehículo");
             modelo.addColumn("Placa");
@@ -76,7 +80,11 @@ public class Pending extends javax.swing.JFrame {
                         modelo.addRow(datos);
                 }
                  table_pending.setModel(modelo);  
-                
+                 TableColumnModel columnModel = table_pending.getColumnModel();
+                    columnModel.getColumn(0).setPreferredWidth(20);
+                    columnModel.getColumn(3).setPreferredWidth(50);
+                    columnModel.getColumn(4).setPreferredWidth(50);
+                    columnModel.getColumn(5).setPreferredWidth(50);
         } catch (SQLException ex) {
             Logger.getLogger(Rate.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -227,6 +235,7 @@ public class Pending extends javax.swing.JFrame {
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
 
+        table_pending.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         table_pending.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -441,9 +450,7 @@ public class Pending extends javax.swing.JFrame {
                 .addGap(15, 15, 15)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel2Layout.createSequentialGroup()
-                            .addComponent(btn_dar_salida, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                        .addComponent(btn_dar_salida, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jPanel8, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(btn_generate_salida, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel2Layout.createSequentialGroup()

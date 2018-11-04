@@ -11,6 +11,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
 import soft.java.conection.MySQLConnection;
 
 
@@ -73,7 +74,11 @@ public class Daily extends javax.swing.JFrame {
                     datos[10] = rs.getString(11); /*Estado*/
                         modelo.addRow(datos);
                 }
-                 table_daily.setModel(modelo);  
+                 table_daily.setModel(modelo);
+                 TableColumnModel columnModel = table_daily.getColumnModel();
+                    columnModel.getColumn(0).setPreferredWidth(40);
+                    columnModel.getColumn(3).setPreferredWidth(70);
+                    columnModel.getColumn(4).setPreferredWidth(70);
                 
         } catch (SQLException ex) {
             Logger.getLogger(Rate.class.getName()).log(Level.SEVERE, null, ex);
@@ -290,9 +295,8 @@ public class Daily extends javax.swing.JFrame {
                 .addGap(19, 19, 19)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel5)
-                        .addComponent(jLabel1)))
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel5))
                 .addContainerGap(21, Short.MAX_VALUE))
         );
 
@@ -350,7 +354,7 @@ public class Daily extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_searchActionPerformed
 
     private void btn_reporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_reporteActionPerformed
-        // Boton dar salida
+        // Boton generar reporte
        
     }//GEN-LAST:event_btn_reporteActionPerformed
 
