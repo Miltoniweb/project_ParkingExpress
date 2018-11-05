@@ -1,10 +1,19 @@
 
 package soft.java.interfaces;
 
+import com.itextpdf.kernel.geom.PageSize;
+import com.itextpdf.kernel.pdf.PdfDocument;
+import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.layout.Document;
+import com.itextpdf.layout.border.Border;
+import com.itextpdf.layout.element.Paragraph;
 import java.awt.MouseInfo;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -950,14 +959,89 @@ public class Registry extends javax.swing.JFrame {
         if (!txt_efectivo.getText().equals(emptyId)){
             int payMenor = Integer.parseInt(txt_efectivo.getText());
             if(payMenor >= payMayor){
-                int result = JOptionPane.showConfirmDialog(null, "¿Desea generar reporte de salida del vehículo?", "Cierre" ,dialog);  
+                int result = JOptionPane.showConfirmDialog(null, "¿Generar reporte de salida del vehículo?", "Cierre" ,dialog);  
                 if (result == 0){
                     try {        
                         PreparedStatement pps = con.prepareStatement("UPDATE vehiculo SET valor_pagado = '"+txt_pago.getText()
                                 +"' WHERE placa = '"+txt_placa.getText()+"'");
                         pps.executeUpdate();
                         pps.close();
-                        JOptionPane.showMessageDialog(null, "Vihículo dado de salida.");
+                        JOptionPane.showMessageDialog(null, "Vehículo dado de salida.");
+                   } catch (SQLException ex) {
+                       Logger.getLogger(Rate.class.getName()).log(Level.SEVERE, null, ex);
+                   }
+                    // Generar reporte de salida vehiculo
+                    try {
+                        // Reemplazar esta ruta al hacer el ejecutable
+                        //  File url = new File("..\\src\\soft\\java\\reporting\\recibo-parkingExpress.pdf");
+                    File urldest = new File("src\\soft\\java\\reporting\\recibo-parkingExpress.pdf");
+                    String dest = urldest.toString(); 
+                        System.out.println(dest); 
+      
+                        // REPORTE
+                        PdfWriter writer = new PdfWriter(dest);
+                        PdfDocument pdfDoc = new PdfDocument(writer);
+                        Document document = new Document(pdfDoc, PageSize.A5);
+                        pdfDoc.addNewPage(); 
+                        
+                        Paragraph paragraph = new Paragraph ("| Recibo | - ParkingExpress"); 
+                        paragraph.setBorder(Border.NO_BORDER);
+                        paragraph.setBold();
+                        
+                        Paragraph para1 = new Paragraph ("Placa vehiculo: "+txt_placa.getText()); 
+                        Paragraph para2 = new Paragraph ("Fecha de ingreso: "+txt_fecha_entrada.getText()); 
+                        Paragraph para3 = new Paragraph ("Hora de ingreso: "+txt_hora_entrada.getText());
+                        Paragraph para4 = new Paragraph ("Fecha de salida: "+txt_fecha_salida.getText());
+                        Paragraph para5 = new Paragraph ("Hora de salida: "+txt_hora_salida.getText());
+                        Paragraph para6 = new Paragraph ("-----------------------");
+                        Paragraph para7 = new Paragraph ("Pago por aparcamiento: "+txt_pago.getText());
+                        Paragraph para8 = new Paragraph ("Pago en efectivo: "+txt_efectivo.getText());
+                        Paragraph para9 = new Paragraph ("Total cambio: "+txt_cambio.getText());
+                        Paragraph para10 = new Paragraph ("-----------------------");
+                        
+                        document.add(paragraph); 
+                        document.add(para1); 
+                        document.add(para2); 
+                        document.add(para3);
+                        document.add(para4); 
+                        document.add(para5); 
+                        document.add(para6);
+                        document.add(para7);
+                        document.add(para8); 
+                        document.add(para9);
+                        document.add(para10);
+                        document.close();
+                        
+                        System.out.println("PDF Created");
+                        // Abre el REPORTE
+                        int result2 = JOptionPane.showConfirmDialog(null, "¿Desea abrir el reporte de salida del vehículo, para imprimir?", "Imprimir" ,dialog);  
+                        if(result2 == 0){
+                            try {
+                                if(urldest.exists()){
+                                    Process processOpen = Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler "+dest);
+                                    processOpen.waitFor();
+                                }else{
+                                    JOptionPane.showMessageDialog(null, "Es posible que aun no se haya generado ningun reporte, por favor verifique.");
+                                }
+                            } catch (Exception ex) {
+                               ex.printStackTrace();  
+                            }
+                        }
+                        limpiar();
+                        bloquear();
+                    } catch (FileNotFoundException ex) {
+                        Logger.getLogger(Registry.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (IOException ex) {
+                        Logger.getLogger(Registry.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                   
+                }else if(result == 1){
+                    try {        
+                        PreparedStatement pps = con.prepareStatement("UPDATE vehiculo SET valor_pagado = '"+txt_pago.getText()
+                                +"' WHERE placa = '"+txt_placa.getText()+"'");
+                        pps.executeUpdate();
+                        pps.close();
+                        JOptionPane.showMessageDialog(null, "Vehículo dado de salida.");
                         limpiar();
                         bloquear();
                    } catch (SQLException ex) {
