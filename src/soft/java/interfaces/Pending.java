@@ -19,6 +19,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 import soft.java.conection.MySQLConnection;
+import soft.java.login.Login;
 
 public class Pending extends javax.swing.JFrame {
     
@@ -474,7 +475,11 @@ public class Pending extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jLabel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseClicked
-        this.dispose();
+        int dialog = JOptionPane.YES_NO_OPTION;
+        int result = JOptionPane.showConfirmDialog(null, "¿Desea cerrar esta ventana?", "Cerrar" ,dialog);
+        if (result == 0){
+            this.dispose();
+        }
     }//GEN-LAST:event_jLabel5MouseClicked
 
     private void formMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMousePressed

@@ -332,12 +332,9 @@ public class Daily extends javax.swing.JFrame {
 
     private void jLabel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseClicked
         int dialog = JOptionPane.YES_NO_OPTION;
-        int result = JOptionPane.showConfirmDialog(null, "¿Desea salir del sistema?", "Salir" ,dialog);
+        int result = JOptionPane.showConfirmDialog(null, "¿Desea cerrar esta ventana?", "Cerrar" ,dialog);
         if (result == 0){
-            conex.getDisconnectBD();
-            Login login = new Login();
-            login.setVisible(true);
-                this.dispose();
+            this.dispose();
         }
     }//GEN-LAST:event_jLabel5MouseClicked
 
