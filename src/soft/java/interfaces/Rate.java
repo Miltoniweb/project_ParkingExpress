@@ -13,6 +13,7 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import soft.java.conection.MySQLConnection;
+import soft.java.login.Login;
 
 
 public class Rate extends javax.swing.JFrame {
@@ -538,7 +539,14 @@ public class Rate extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jLabel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseClicked
-        this.dispose();
+        int dialog = JOptionPane.YES_NO_OPTION;
+        int result = JOptionPane.showConfirmDialog(null, "¿Desea salir del sistema?", "Salir" ,dialog);
+        if (result == 0){
+            conex.getDisconnectBD();
+            Login login = new Login();
+            login.setVisible(true);
+                this.dispose();
+        }
     }//GEN-LAST:event_jLabel5MouseClicked
 
     private void txt_valorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_valorActionPerformed

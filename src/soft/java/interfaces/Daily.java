@@ -13,6 +13,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 import soft.java.conection.MySQLConnection;
+import soft.java.login.Login;
 
 
 public class Daily extends javax.swing.JFrame {
@@ -52,7 +53,7 @@ public class Daily extends javax.swing.JFrame {
             if(id_search.equals("")){
                 sql = "SELECT id_vehiculo, placa, tipo_vehiculo, fecha_entrada, hora_entrada, fecha_salida, hora_salida, valor_pagado, tipo_tarifa, valor, estado FROM vehiculo INNER JOIN tarifa ON vehiculo.id_tarifa1 = tarifa.id_tarifa";
             }else{
-                sql = "SELECT id_vehiculo, placa, tipo_vehiculo, fecha_entrada, hora_entrada, fecha_salida, hora_salida, valor_pagado, tipo_tarifa, valor, estado FROM vehiculo INNER JOIN tarifa ON vehiculo.id_tarifa1 = tarifa.id_tarifa WHERE "+searchAttribute+"='"+id_search+"'";
+                sql = "SELECT id_vehiculo, placa, tipo_vehiculo, fecha_entrada, hora_entrada, fecha_salida, hora_salida, valor_pagado, tipo_tarifa, valor, estado FROM vehiculo INNER JOIN tarifa ON vehiculo.id_tarifa1 = tarifa.id_tarifa WHERE "+searchAttribute+" LIKE '"+id_search+"%'";
             }
     
             String datos[] = new String[11];
@@ -103,7 +104,7 @@ public class Daily extends javax.swing.JFrame {
         jPanel4 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         table_daily = new javax.swing.JTable();
-        btn_reporte = new javax.swing.JButton();
+        btn_cerrar = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
@@ -238,17 +239,17 @@ public class Daily extends javax.swing.JFrame {
                 .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        btn_reporte.setBackground(new java.awt.Color(255, 255, 255));
-        btn_reporte.setFont(new java.awt.Font("Roboto", 0, 16)); // NOI18N
-        btn_reporte.setForeground(new java.awt.Color(49, 56, 62));
-        btn_reporte.setText("Generar Reporte");
-        btn_reporte.setBorder(null);
-        btn_reporte.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btn_reporte.setFocusPainted(false);
-        btn_reporte.setPreferredSize(new java.awt.Dimension(189, 50));
-        btn_reporte.addActionListener(new java.awt.event.ActionListener() {
+        btn_cerrar.setBackground(new java.awt.Color(255, 255, 255));
+        btn_cerrar.setFont(new java.awt.Font("Roboto", 0, 16)); // NOI18N
+        btn_cerrar.setForeground(new java.awt.Color(49, 56, 62));
+        btn_cerrar.setText("Cerrar");
+        btn_cerrar.setBorder(null);
+        btn_cerrar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn_cerrar.setFocusPainted(false);
+        btn_cerrar.setPreferredSize(new java.awt.Dimension(189, 50));
+        btn_cerrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_reporteActionPerformed(evt);
+                btn_cerrarActionPerformed(evt);
             }
         });
 
@@ -310,8 +311,8 @@ public class Daily extends javax.swing.JFrame {
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addGap(16, 16, 16)
-                .addComponent(btn_reporte, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(btn_cerrar, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(947, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -322,7 +323,7 @@ public class Daily extends javax.swing.JFrame {
                         .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btn_reporte, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btn_cerrar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(14, 14, 14))
         );
 
@@ -330,7 +331,14 @@ public class Daily extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jLabel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseClicked
-        this.dispose();
+        int dialog = JOptionPane.YES_NO_OPTION;
+        int result = JOptionPane.showConfirmDialog(null, "¿Desea salir del sistema?", "Salir" ,dialog);
+        if (result == 0){
+            conex.getDisconnectBD();
+            Login login = new Login();
+            login.setVisible(true);
+                this.dispose();
+        }
     }//GEN-LAST:event_jLabel5MouseClicked
 
     private void jLabel21MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel21MouseClicked
@@ -353,11 +361,6 @@ public class Daily extends javax.swing.JFrame {
                 + "");}
     }//GEN-LAST:event_btn_searchActionPerformed
 
-    private void btn_reporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_reporteActionPerformed
-        // Boton generar reporte
-       
-    }//GEN-LAST:event_btn_reporteActionPerformed
-
     private void formMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMousePressed
         // Mouse Pressed
          x = evt.getX();
@@ -369,6 +372,10 @@ public class Daily extends javax.swing.JFrame {
        Point p = MouseInfo.getPointerInfo().getLocation();
        this.setLocation(p.x-x, p.y-y);
     }//GEN-LAST:event_formMouseDragged
+
+    private void btn_cerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cerrarActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_btn_cerrarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -406,7 +413,7 @@ public class Daily extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btn_reporte;
+    private javax.swing.JButton btn_cerrar;
     private javax.swing.JButton btn_search;
     private javax.swing.ButtonGroup buttonGroupSearch;
     private javax.swing.JLabel jLabel1;

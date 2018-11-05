@@ -581,7 +581,10 @@ public class Home extends javax.swing.JFrame {
         int dialog = JOptionPane.YES_NO_OPTION;
         int result = JOptionPane.showConfirmDialog(null, "¿Desea salir del sistema?", "Salir" ,dialog);
         if (result == 0){
-            System.exit(0);
+            conex.getDisconnectBD();
+            Login login = new Login();
+            login.setVisible(true);
+                this.dispose();
         }
     }//GEN-LAST:event_jLabel5MouseClicked
 

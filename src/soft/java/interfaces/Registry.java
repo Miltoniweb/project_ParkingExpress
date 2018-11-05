@@ -27,6 +27,7 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.Timer;
 import soft.java.conection.MySQLConnection;
+import soft.java.login.Login;
 
 
 public class Registry extends javax.swing.JFrame {
@@ -830,7 +831,14 @@ public class Registry extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jLabel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseClicked
-        this.dispose();
+       int dialog = JOptionPane.YES_NO_OPTION;
+        int result = JOptionPane.showConfirmDialog(null, "¿Desea salir del sistema?", "Salir" ,dialog);
+        if (result == 0){
+            conex.getDisconnectBD();
+            Login login = new Login();
+            login.setVisible(true);
+                this.dispose();
+        }
     }//GEN-LAST:event_jLabel5MouseClicked
 
     private void formMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseDragged
