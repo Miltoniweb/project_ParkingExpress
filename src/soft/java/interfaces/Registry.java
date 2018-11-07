@@ -408,6 +408,11 @@ public class Registry extends javax.swing.JFrame {
                 txt_placaActionPerformed(evt);
             }
         });
+        txt_placa.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_placaKeyTyped(evt);
+            }
+        });
 
         jcb_vehiculo.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
         jcb_vehiculo.setPreferredSize(new java.awt.Dimension(33, 35));
@@ -884,7 +889,11 @@ public class Registry extends javax.swing.JFrame {
      // Evento, teclado, - Campo Efectivo
     private void txt_efectivoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_efectivoKeyTyped
         char inputText = evt.getKeyChar();
+        int characterLimit = 10;
         if (inputText<'0' || inputText>'9') evt.consume();
+        if (txt_efectivo.getText().length() >= characterLimit){
+            evt.consume();
+        }
     }//GEN-LAST:event_txt_efectivoKeyTyped
 
     private void jLabel19MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel19MouseClicked
@@ -1098,6 +1107,14 @@ public class Registry extends javax.swing.JFrame {
     private void txt_tipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_tipoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_tipoActionPerformed
+
+    private void txt_placaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_placaKeyTyped
+        // Limite caracteres placa
+        int characterLimit = 15;
+        if (txt_placa.getText().length() >= characterLimit){
+            evt.consume();
+        }
+    }//GEN-LAST:event_txt_placaKeyTyped
 
     /**
      * @param args the command line arguments

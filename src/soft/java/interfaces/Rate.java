@@ -293,12 +293,22 @@ public class Rate extends javax.swing.JFrame {
                 txt_tarifaActionPerformed(evt);
             }
         });
+        txt_tarifa.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_tarifaKeyTyped(evt);
+            }
+        });
 
         txt_vehiculo.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
         txt_vehiculo.setPreferredSize(new java.awt.Dimension(14, 35));
         txt_vehiculo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txt_vehiculoActionPerformed(evt);
+            }
+        });
+        txt_vehiculo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_vehiculoKeyTyped(evt);
             }
         });
 
@@ -643,8 +653,13 @@ public class Rate extends javax.swing.JFrame {
     }//GEN-LAST:event_txt_tarifaActionPerformed
 
     private void txt_valorKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_valorKeyTyped
-        char inputText = evt.getKeyChar();
+        char inputText = evt.getKeyChar();// Limite caracteres tipo vehiculo
+        int characterLimit = 15;
+        if (txt_valor.getText().length() >= characterLimit){
+            evt.consume();
+        }
         if (inputText<'0' || inputText>'9') evt.consume();
+        
     }//GEN-LAST:event_txt_valorKeyTyped
 
     private void btn_enableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_enableActionPerformed
@@ -657,12 +672,28 @@ public class Rate extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_disableActionPerformed
 
     private void txt_vehiculoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_vehiculoActionPerformed
-
+        
     }//GEN-LAST:event_txt_vehiculoActionPerformed
 
     private void jLabel21MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel21MouseClicked
         this.setExtendedState(ICONIFIED);
     }//GEN-LAST:event_jLabel21MouseClicked
+
+    private void txt_vehiculoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_vehiculoKeyTyped
+       // Limite caracteres tipo vehiculo
+        int characterLimit = 15;
+        if (txt_vehiculo.getText().length() >= characterLimit){
+            evt.consume();
+        }
+    }//GEN-LAST:event_txt_vehiculoKeyTyped
+
+    private void txt_tarifaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_tarifaKeyTyped
+        // Limite caracteres tarifa
+        int characterLimit = 15;
+        if (txt_tarifa.getText().length() >= characterLimit){
+            evt.consume();
+        }
+    }//GEN-LAST:event_txt_tarifaKeyTyped
 
     /**
      * @param args the command line arguments

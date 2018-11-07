@@ -308,11 +308,21 @@ public class Pending extends javax.swing.JFrame {
                 txt_fecha_SalidaActionPerformed(evt);
             }
         });
+        txt_fecha_Salida.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_fecha_SalidaKeyTyped(evt);
+            }
+        });
 
         txt_hora_salida.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
         txt_hora_salida.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txt_hora_salidaActionPerformed(evt);
+            }
+        });
+        txt_hora_salida.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_hora_salidaKeyTyped(evt);
             }
         });
 
@@ -719,6 +729,20 @@ public class Pending extends javax.swing.JFrame {
     private void jLabel21MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel21MouseClicked
         this.setExtendedState(ICONIFIED);
     }//GEN-LAST:event_jLabel21MouseClicked
+
+    private void txt_fecha_SalidaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_fecha_SalidaKeyTyped
+        int characterLimit = 10;
+        if (txt_fecha_Salida.getText().length() >= characterLimit){
+            evt.consume();
+        }
+    }//GEN-LAST:event_txt_fecha_SalidaKeyTyped
+
+    private void txt_hora_salidaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_hora_salidaKeyTyped
+       int characterLimit = 10;
+        if (txt_hora_salida.getText().length() >= characterLimit){
+            evt.consume();
+        }
+    }//GEN-LAST:event_txt_hora_salidaKeyTyped
 
 
     public static void main(String args[]) {
