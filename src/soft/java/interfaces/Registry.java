@@ -24,6 +24,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.Timer;
 import soft.java.conection.MySQLConnection;
@@ -43,6 +44,7 @@ public class Registry extends javax.swing.JFrame {
         this.setUndecorated(true);
         initComponents();
         setTitle("Registro vehículo");
+        setIconImage(new ImageIcon(getClass().getResource("/soft/java/files/car_icon_100px.png")).getImage());
         this.setLocationRelativeTo(null);
         // Ejecuta la hora del sistema
         Timer time = new Timer(1000, new Registry.currentHour());

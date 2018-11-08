@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import soft.java.conection.MySQLConnection;
@@ -29,6 +30,7 @@ public class Rate extends javax.swing.JFrame {
         this.setUndecorated(true);
         initComponents();
         setTitle("Tarifas");
+        setIconImage(new ImageIcon(getClass().getResource("/soft/java/files/car_icon_100px.png")).getImage());
         this.setLocationRelativeTo(null);
         ShowTable();
         bloquear();

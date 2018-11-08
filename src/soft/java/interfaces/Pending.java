@@ -15,6 +15,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
@@ -38,6 +39,7 @@ public class Pending extends javax.swing.JFrame {
         this.setUndecorated(true);
         initComponents();
         setTitle("Pendientes");
+        setIconImage(new ImageIcon(getClass().getResource("/soft/java/files/car_icon_100px.png")).getImage());
         this.setLocationRelativeTo(null);
         bloquear();
         ShowTable();

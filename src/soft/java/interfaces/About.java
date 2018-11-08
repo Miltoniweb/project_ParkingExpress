@@ -5,6 +5,7 @@ import java.awt.MouseInfo;
 import java.awt.Point;
 import java.io.File;
 import java.io.IOException;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 public class About extends javax.swing.JFrame {
@@ -15,6 +16,7 @@ public class About extends javax.swing.JFrame {
         this.setUndecorated(true);
         initComponents();
         setTitle("Acerca");
+        setIconImage(new ImageIcon(getClass().getResource("/soft/java/files/car_icon_100px.png")).getImage());
         this.setLocationRelativeTo(null);
         
     }

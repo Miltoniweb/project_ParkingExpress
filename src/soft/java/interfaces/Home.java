@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.Timer;
 import soft.java.conection.MySQLConnection;
@@ -29,7 +30,7 @@ public class Home extends javax.swing.JFrame {
         initComponents();
         setTitle("Menú");
         this.setLocationRelativeTo(null);
-        
+        setIconImage(new ImageIcon(getClass().getResource("/soft/java/files/car_icon_100px.png")).getImage());
         // Ejecuta la hora del sistema
         Timer time = new Timer(1000, new Home.currentHour());
         time.start();

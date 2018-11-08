@@ -3,6 +3,7 @@ package soft.java.login;
 
 import java.awt.MouseInfo;
 import java.awt.Point;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import soft.java.interfaces.Home;
 
@@ -15,6 +16,7 @@ public class Login extends javax.swing.JFrame {
         this.setUndecorated(true);
         initComponents();
         setTitle("Inicio de Sesión");
+        setIconImage(new ImageIcon(getClass().getResource("/soft/java/files/car_icon_100px.png")).getImage());
         this.setLocationRelativeTo(null);
         
     }
